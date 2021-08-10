@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %} 
+        <title>{{ title }} - All of the Lights!</title>
+        {% endif %} 
+    </head>
+    <body>
+        <div>All of the Lights!</div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
