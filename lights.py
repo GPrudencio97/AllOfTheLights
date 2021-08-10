@@ -1,4 +1,5 @@
 import time
+from rpi_ws281x import *
 import argparse
 
 # LED strip configuration:
@@ -25,3 +26,9 @@ def indigo():
     return Color(75, 0, 130)
 def violet():
     return Color(238, 130, 238)
+def off():
+    print(off)
+
+if __name__ == '__main__':
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
