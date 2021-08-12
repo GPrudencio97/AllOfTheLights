@@ -17,7 +17,6 @@ colorama==0.4.3
 command-not-found==0.3
 configobj==5.0.6
 constantly==15.1.0
-cryptography==2.8
 dbus-python==1.2.16
 distlib==0.3.1
 distro==1.4.0
@@ -41,7 +40,6 @@ Flask-WTF==0.15.1
 greenlet==1.1.0
 guess-language-spirit==0.5.3
 httpie==2.4.0
-httplib2==0.14.0
 hyperlink==19.0.0
 idna==2.10
 importlib-metadata==1.5.0
@@ -82,7 +80,6 @@ python-dotenv==0.17.1
 python-editor==1.0.4
 pytz==2021.1
 pyusb==1.1.0
-PyYAML==5.3.1
 redis==3.5.3
 requests==2.25.1
 requests-toolbelt==0.9.1
@@ -96,7 +93,6 @@ six==1.16.0
 SQLAlchemy==1.4.17
 ssh-import-id==5.10
 systemd-python==234
-Twisted==18.9.0
 ubuntu-advantage-tools==20.3
 ufw==0.36
 unattended-upgrades==0.1
