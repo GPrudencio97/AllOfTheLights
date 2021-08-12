@@ -27,9 +27,11 @@ def index():
             print("BLUE")
         elif request.form['submit_button'] == 'INDIGO':
             print("INDIGO")
-        else:
-            request.form['submit_button'] == 'VIOLET'
+        elif request.form['submit_button'] == 'VIOLET':
             print("VIOLET")
+        else:
+            request.form['submit_button'] == 'OFF'
+            print("OFF")
 
     return render_template('index.html')
 
@@ -49,8 +51,13 @@ def current():
             print("BLUE")
         elif request.form['submit_button'] == 'INDIGO':
             print("INDIGO")
-        else:
-            request.form['submit_button'] == 'VIOLET'
+        elif request.form['submit_button'] == 'VIOLET':
             print("VIOLET")
+        elif request.form['submit_button'] == 'ON':
+            print("ON")
+        else:
+            request.form['submit_button'] == 'OFF'
+            print("OFF")
+        
 
     return render_template('control.html', form=form, color=color)
