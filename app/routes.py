@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, form
 from app import app
+from lights import *
 
 app.errorhandler(404)
 def page_not_found(e):
