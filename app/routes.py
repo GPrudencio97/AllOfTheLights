@@ -17,6 +17,7 @@ def index():
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
             print("RED")
+            solidColor(strip, Color(255, 0, 0))
         elif request.form['submit_button'] == 'ORANGE':
             print("ORANGE")
         elif request.form['submit_button'] == 'YELLOW':

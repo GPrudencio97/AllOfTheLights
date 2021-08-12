@@ -12,23 +12,32 @@ LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-def red():
-    return Color(255, 0, 0)
-def orange():
-    return Color(255, 128, 0)
-def yellow():
-    return Color(255, 255, 0)
-def green():
-    return Color(0, 255, 0)
-def blue():
-    return Color(0, 0, 255)
-def indigo():
-    return Color(75, 0, 130)
-def violet():
-    return Color(238, 130, 238)
-def off():
-    print(off)
+def solidColor(strip, color):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color)
+        strip.show()
 
 if __name__ == '__main__':
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
+
+    # Create NeoPixel object with appropriate configuration.
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
     strip.begin()
+
+    print ('Press Ctrl-C to quit.')
+    if not args.clear:
+        print('Use "-c" argument to clear LEDs on exit')
+
+    try:
+
+        while True:
+            print ('Solid Color')
+            solidColor(strip, Color(255, 0, 0))
+
+    except KeyboardInterrupt:
+        if args.clear:
+            solidColor(strip, Color(0,0,0))
