@@ -1,8 +1,10 @@
-import os, sys
+import os
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, form
 from app import app
+from app.lights.colors import *
 
+@app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
@@ -15,61 +17,57 @@ def internal_server_error(e):
 def index():
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("Run trueRed")
-            os.system('sudo python3 trueRed.py')
+            print("Run red")
+            red()
         elif request.form['submit_button'] == 'ORANGE':
-            print("Run trueOrange")
-            os.system('sudo python3 trueOrange.py')
+            print("Run orange")
+            orange()
         elif request.form['submit_button'] == 'YELLOW':
-            print("Run trueYellow")
-            os.system('sudo python3 trueYellow.py')
+            print("Run yellow")
+            yellow()
         elif request.form['submit_button'] == 'GREEN':
-            print("Run trueGreen")
-            os.system('sudo python3 trueGreen.py')
+            print("Run green")
+            green()
         elif request.form['submit_button'] == 'BLUE':
-            print("Run trueBlue")
-            os.system('sudo python3 trueBlue.py')
+            print("Run blue")
+            blue()
         elif request.form['submit_button'] == 'INDIGO':
-            print("Run trueIndigo")
-            os.system('sudo python3 trueIndigo.py')
+            print("Run indigo")
+            indigo()
         elif request.form['submit_button'] == 'VIOLET':
-            print("Run trueViolet")
-            os.system('sudo python3 trueViolet.py')
-        elif request.form['submit_button'] == 'ON':
+            print("Run violet")
+            violet()
+        else:
+            request.form['submit_button'] == 'ON'
             print("ON")
             os.system('sudo python3 lightsOn.py -c')
-        else:
-            request.form['submit_button'] == 'OFF'
-            print("OFF")
-            os.system('sudo python3 lightsOff.py')
 
     return render_template('index.html')
 
 @app.route('/control', methods=['GET', 'POST'])
 def current():
-    color = request.form.get('submit_button')
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("Run trueRed")
-            os.system('sudo python3 trueRed.py')
+            print("Run red")
+            red()
         elif request.form['submit_button'] == 'ORANGE':
-            print("Run trueOrange")
-            os.system('sudo python3 trueOrange.py')
+            print("Run orange")
+            orange()
         elif request.form['submit_button'] == 'YELLOW':
-            print("Run trueYellow")
-            os.system('sudo python3 trueYellow.py')
+            print("Run yellow")
+            yellow()
         elif request.form['submit_button'] == 'GREEN':
-            print("Run trueGreen")
-            os.system('sudo python3 trueGreen.py')
+            print("Run green")
+            green()
         elif request.form['submit_button'] == 'BLUE':
-            print("Run trueBlue")
-            os.system('sudo python3 trueBlue.py')
+            print("Run blue")
+            blue()
         elif request.form['submit_button'] == 'INDIGO':
-            print("Run trueIndigo")
-            os.system('sudo python3 trueIndigo.py')
+            print("Run indigo")
+            indigo()
         elif request.form['submit_button'] == 'VIOLET':
-            print("Run trueViolet")
-            os.system('sudo python3 trueViolet.py')
+            print("Run violet")
+            violet()
         elif request.form['submit_button'] == 'ON':
             print("ON")
             os.system('sudo python3 lightsOn.py -c')
