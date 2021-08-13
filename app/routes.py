@@ -1,10 +1,10 @@
-import os
+import os, sys
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, form
 from app import app
-from lights import *
+import lights
+from rpi_ws281x import *
 
-app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
@@ -14,11 +14,11 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-def index(): 
+def index():
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("RED")
-            solidColor(strip, Color(255, 0, 0))
+            print("Run Code")
+            lights.main()
         elif request.form['submit_button'] == 'ORANGE':
             print("ORANGE")
         elif request.form['submit_button'] == 'YELLOW':
@@ -42,7 +42,8 @@ def current():
     color = request.form.get('submit_button')
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("RED")
+            print("Run Code")
+            os.system('sudo python3 lights.py')
         elif request.form['submit_button'] == 'ORANGE':
             print("ORANGE")
         elif request.form['submit_button'] == 'YELLOW':
@@ -63,3 +64,4 @@ def current():
         
 
     return render_template('control.html', form=form, color=color)
+
