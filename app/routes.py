@@ -2,7 +2,7 @@ import os, sys
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, form
 from app import app
-import trueRed
+
 
 def page_not_found(e):
     return render_template('404.html'), 404
