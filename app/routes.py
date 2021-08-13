@@ -2,8 +2,7 @@ import os, sys
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, form
 from app import app
-import lights
-from rpi_ws281x import *
+import trueRed
 
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -17,8 +16,8 @@ def internal_server_error(e):
 def index():
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("Run Code")
-            lights.main()
+            print("Run trueRed")
+            os.system('sudo python3 trueRed.py')
         elif request.form['submit_button'] == 'ORANGE':
             print("ORANGE")
         elif request.form['submit_button'] == 'YELLOW':
