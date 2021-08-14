@@ -40,12 +40,13 @@ def index():
         else:
             request.form['submit_button'] == 'ON'
             print("ON")
-            os.system('sudo python3 lightsOn.py -c')
+            lights_on()
 
     return render_template('index.html')
 
 @app.route('/control', methods=['GET', 'POST'])
 def current():
+    color = request.form.get('submit_button')
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
             print("Run red")
@@ -70,11 +71,11 @@ def current():
             violet()
         elif request.form['submit_button'] == 'ON':
             print("ON")
-            os.system('sudo python3 lightsOn.py -c')
+            lights_on()
         else:
             request.form['submit_button'] == 'OFF'
             print("OFF")
-            os.system('sudo python3 lightsOff.py')
+            lights_off()
         
 
     return render_template('control.html', form=form, color=color)

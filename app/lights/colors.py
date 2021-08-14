@@ -1,6 +1,5 @@
 from rpi_ws281x import *
-
-
+import random
 
 # LED strip configuration
 LED_COUNT      = 30      # Number of LED pixels.
@@ -19,25 +18,45 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 def red():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     solid_color(strip, Color(255, 0, 0))
 def orange():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     solid_color(strip, Color(255, 165, 0))
 def yellow():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     solid_color(strip, Color(255, 255, 0))
 def green():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    solid_color(strip, Color(0, 0, 255))
+    strip.begin()
+    solid_color(strip, Color(0, 255, 0))
 def blue():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    solid_color(strip, Color(0, 255, 0))
+    strip.begin()
+    solid_color(strip, Color(0, 0, 255))
 def indigo():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     solid_color(strip, Color(75, 0, 130))
 def violet():
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     solid_color(strip, Color(238, 130, 238))
+
+def lights_off():
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
+    solid_color(strip, Color(0, 0, 0))
+
+def lights_on():
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
+    x1 = random.randrange(0, 255)
+    x2 = random.randrange(0, 255)
+    x3 = random.randrange(0, 255)
+    solid_color(strip, Color(x1, x2,x3))
 
 
 def solid_color(strip, color):
