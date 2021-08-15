@@ -47,6 +47,9 @@ def index():
 @app.route('/control', methods=['GET', 'POST'])
 def current():
     color = request.form.get('submit_button')
+    if color == 'RAINBOW':
+        rainbow()
+
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
             print("Run red")
