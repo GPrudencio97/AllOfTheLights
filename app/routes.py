@@ -48,7 +48,9 @@ def index():
 def current():
     color = request.form.get('submit_button')
     if color == 'RAINBOW':
-        rainbow()
+        print("Run rainbow")
+        while True:
+            rainbow()
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
@@ -75,8 +77,7 @@ def current():
         elif request.form['submit_button'] == 'ON':
             print("ON")
             lights_on()
-        else:
-            request.form['submit_button'] == 'OFF'
+        elif request.form['submit_button'] == 'OFF':
             print("OFF")
             lights_off()
         
