@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>LED Light's Color Options</h1>
+    <h1 style="text-align: center">LED Light's Color Options</h1>
 
     <form method="POST" action="/control">
+        
+        <h3>On/Off:</h3>
         {% if color != 'OFF' %}
             <input type="submit" name="submit_button" value="OFF">
         {% else %}
             <input type="submit" name="submit_button" value="ON">
         {% endif %}
+
+        <h3>Solid Colors:</h3>
         <input type="submit" name="submit_button" value="RED" style="background-color: red; color: white;">
         <input type="submit" name="submit_button" value="ORANGE" style="background-color: orange; color: white;">
         <input type="submit" name="submit_button" value="YELLOW" style="background-color: yellow; color: black;">
@@ -16,12 +20,23 @@
         <input type="submit" name="submit_button" value="BLUE" style="background-color: blue; color: white;">
         <input type="submit" name="submit_button" value="INDIGO" style="background-color: indigo; color: white;">
         <input type="submit" name="submit_button" value="VIOLET" style="background-color: violet; color: white;">
-        <input type="submit" name="submit_button" value="RAINBOW" style="background-color: mintcream; color: black;">
+        <input type="submit" name="submit_button" value="WHITE" style="background-color: white; color: black;">
+        
+        <h3>Patterns:</h3>
+        <input type="submit" name="submit_button" value="RAINBOW" style="background-image: linear-gradient(135deg, red,orange,green,blue,indigo,violet); color:white;">
+        
+        <h3>Brightness:</h3>
+        <input name="text" id = "current_brightness" placeholder ="100" maxlength="3" size="3">%
+
     </form>
 
     {% if color == 'ON' %}
-        <p>Current Color: RANDOM COLOR</p>
+        <h5>Current Color: WHITE</h5>
+    {% elif color == 'RAINBOW' %}
+        <h5>Pattern Running: {{ color }}</h5>
     {% else %}
-        <p>Current Color: {{ color or 'not set' }}</p>
+        <h5>Current Color: {{ color or 'not set' }}</h5>
     {% endif %}
+
+
 {% endblock %}
