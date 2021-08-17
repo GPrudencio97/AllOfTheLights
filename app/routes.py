@@ -1,82 +1,149 @@
-import os
+import sys, time
 from flask import Flask, render_template, request
-from flask_wtf import FlaskForm, form
 from app import app
+from flask_wtf import form
+from flask_executor import Executor
 from app.lights.colors import *
+from threading import Event
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('500.html'), 500
+executor = Executor(app)
+exit = Event()
+color = 'NULL'
+status = ""
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        if request.form['submit_button'] == 'RED':
-            print("Run red")
-            red()
-        elif request.form['submit_button'] == 'ORANGE':
-            print("Run orange")
-            orange()
-        elif request.form['submit_button'] == 'YELLOW':
-            print("Run yellow")
-            yellow()
-        elif request.form['submit_button'] == 'GREEN':
-            print("Run green")
-            green()
-        elif request.form['submit_button'] == 'BLUE':
-            print("Run blue")
-            blue()
-        elif request.form['submit_button'] == 'INDIGO':
-            print("Run indigo")
-            indigo()
-        elif request.form['submit_button'] == 'VIOLET':
-            print("Run violet")
-            violet()
-        else:
-            request.form['submit_button'] == 'ON'
-            print("ON")
-            lights_on()
-
+    
+    global color
+    color = request.form.get('submit_button')
+    light_strips()
     return render_template('index.html')
 
 @app.route('/control', methods=['GET', 'POST'])
 def current():
+    
+    global color
     color = request.form.get('submit_button')
+    brightness = request.form.get('text')
+    if brightness == "":
+        brightness = 100
+
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
-            print("Run red")
-            red()
+            print("Pressed Red Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'ORANGE':
-            print("Run orange")
-            orange()
+            print("Pressed Orange Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'YELLOW':
-            print("Run yellow")
-            yellow()
+            print("Pressed Yellow Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'GREEN':
-            print("Run green")
-            green()
+            print("Pressed Green Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'BLUE':
-            print("Run blue")
-            blue()
+            print("Pressed Blue Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'INDIGO':
-            print("Run indigo")
-            indigo()
+            print("Pressed Indigo Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'VIOLET':
-            print("Run violet")
-            violet()
+            print("Pressed Violet Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
+        elif request.form['submit_button'] == 'WHITE':
+            print("Pressed White Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
         elif request.form['submit_button'] == 'ON':
-            print("ON")
-            lights_on()
+            print("Pressed On Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
+        elif request.form['submit_button'] == 'OFF':
+            print("Pressed Off Button")
+        elif request.form['submit_button'] == 'RAINBOW':
+            print("Pressed Rainbow Button")
+            brightness = request.form.get('text')
+            if brightness == "":
+                brightness = 100
+    
+    run_pattern.submit(color, brightness)
+    print("render template")
+    return render_template('control.html', form=form, color=color), color
+
+@executor.job
+def run_pattern(pattern, brightness):
+    
+    global color
+    global status
+    
+
+    print("Run " + pattern)
+    try:
+
+
+        while pattern == "RAINBOW":    
+            pattern = color
+            print("RAINBOW IS RUNNING")
+            status = "BEGIN"
+            print(status)
+            status = rainbow(brightness)
+            print(status)
+                       
         else:
-            request.form['submit_button'] == 'OFF'
-            print("OFF")
+            if status == "":
+                print(status)
+                status == ""
+                sys.exit()
+            else:
+                while status != "DONE":
+                    #print(status)
+                    time.sleep(1/1000)
+                else:
+                    print(status)
+                    status == ""
+                    sys.exit()
+
+
+    except SystemExit:
+        if pattern == "RED":
+            red(brightness)
+        elif pattern == "ORANGE":
+            orange(brightness)
+        elif pattern == "YELLOW":
+            yellow(brightness)
+        elif pattern == "GREEN":
+            green(brightness)
+        elif pattern == "BLUE":
+            blue(brightness)
+        elif pattern == "INDIGO":
+            indigo(brightness)
+        elif pattern == "VIOLET":
+            violet(brightness)
+        elif pattern == "WHITE":
+            lights_on(brightness)
+        elif pattern == "ON":
+            lights_on(brightness)
+        else:
             lights_off()
+
+    
         
-
-    return render_template('control.html', form=form, color=color)
-
+            
+            
