@@ -9,6 +9,7 @@ from threading import Event
 executor = Executor(app)
 exit = Event()
 color = 'NULL'
+status = ""
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -16,65 +17,7 @@ def index():
     
     global color
     color = request.form.get('submit_button')
-    brightness = request.form.get('text')
-    if brightness == "":
-        brightness = 100
-
-    if request.method == 'POST':
-        if request.form['submit_button'] == 'RED':
-            print("Pressed Red Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'ORANGE':
-            print("Pressed Orange Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'YELLOW':
-            print("Pressed Yellow Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'GREEN':
-            print("Pressed Green Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'BLUE':
-            print("Pressed Blue Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'INDIGO':
-            print("Pressed Indigo Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'VIOLET':
-            print("Pressed Violet Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'WHITE':
-            print("Pressed White Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'ON':
-            print("Pressed On Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-        elif request.form['submit_button'] == 'OFF':
-            print("Pressed Off Button")
-        elif request.form['submit_button'] == 'RAINBOW':
-            print("Pressed Rainbow Button")
-            brightness = request.form.get('text')
-            if brightness == "":
-                brightness = 100
-    
-    run_pattern.submit(color, brightness)
+    light_strips()
     return render_template('index.html')
 
 @app.route('/control', methods=['GET', 'POST'])

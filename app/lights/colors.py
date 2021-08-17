@@ -13,66 +13,47 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 def red(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(255, 0, 0))
 
 def orange(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(255, 165, 0))
 
 def yellow(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(255, 255, 0))
 
 def green(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(0, 255, 0))
 
 def blue(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(0, 0, 255))
 
 def indigo(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(75, 0, 130))
 
 def violet(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(238, 130, 238))
 
 def lights_off():
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(0, 0, 0))
 
 def lights_on(brightness):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     solid_color(strip, Color(255, 255, 255))
 
-def solid_color(strip, color):
+def solid_color(strip, color,wait_ms=50):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
+        time.sleep(wait_ms/1000.0)
 
 def rainbow(brightness, wait_ms=20, iterations=1):
     LED_BRIGHTNESS = int(new_brightness(brightness))
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    strip.begin()
     for j in range(256*iterations):
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, wheel((i+j) & 255))
@@ -96,3 +77,8 @@ def new_brightness(brightness):
     brightness = int(brightness)
     new_brightness = 255 * (brightness/100)
     return new_brightness
+
+def light_strips():
+    global strip
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
