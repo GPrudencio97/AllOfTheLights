@@ -24,11 +24,12 @@
         
         <h3>Patterns:</h3>
         <input type="submit" name="submit_button" value="RAINBOW" style="background-image: linear-gradient(135deg, red,orange,green,blue,indigo,violet); color:white;">
-        
-        <h3>Brightness:</h3>
-        <input name="text" id = "current_brightness" placeholder ="100" maxlength="3" size="3">%
+        <input type="submit" name="submit_button" value="RAINBOW_CYCLE" style="background-image: linear-gradient(45deg, red,orange,green,blue,indigo,violet); color:white;">
+        <input type="submit" name="submit_button" value="RGB_TWINKLE" style="background-image: linear-gradient(135deg, red,green,blue); color: white;">
 
-    </form>
+        <h3>Brightness:</h3>
+        <input name="text" id = "current_brightness" maxlength="3" size="3" value={{ brightness }}>%
+        
 
     {% if color == 'ON' %}
         <h5>Current Color: WHITE</h5>
@@ -36,7 +37,6 @@
         <h5>Pattern Running: {{ color }}</h5>
     {% else %}
         <h5>Current Color: {{ color or 'not set' }}</h5>
-    {% endif %}
-
+    {% endif %}   
 
 {% endblock %}
