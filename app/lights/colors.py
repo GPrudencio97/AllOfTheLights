@@ -99,16 +99,16 @@ def rgb_twinkle(brightness, wait_s=1):
         for j in range(strip.numPixels()):
             x += 1
         
-        z = round(x/30)                            #edit to effect color lights/meter
-        var1 = random.randrange(0, x)           #edit to effect color lights/meter
+        z = round(x/15)                     #edit to effect color lights/meter
+        var1 = random.randrange(0, z)           
         var2 = random.randrange(1, 4)
         color_array = []
         color_array.append(var1) 
 
         while len(color_array) < z:
-            color_array.append(color_array[len(color_array) - 1] + 30)
+            color_array.append(color_array[len(color_array) - 1] + z)      
 
-        print(color_array)
+        #print(color_array)
 
         if var2 == 1:
             y = 0
