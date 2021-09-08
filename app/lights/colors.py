@@ -92,13 +92,14 @@ def rgb_twinkle(brightness, wait_s=1):
             x += 1
         
         z = round(x/15)                     #edit to effect color lights/meter
-        var1 = random.randrange(0, z)           
+        w = round(x/2)
+        var1 = random.randrange(0, w)           
         var2 = random.randrange(1, 4)
         color_array = []
         color_array.append(var1) 
 
         while len(color_array) < z:
-            color_array.append(color_array[len(color_array) - 1] + z)      
+            color_array.append(color_array[len(color_array) - 1] + w)      
 
         if var2 == 1:
             y = 0

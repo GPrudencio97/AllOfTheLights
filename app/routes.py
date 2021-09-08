@@ -1,6 +1,6 @@
-import logging, sys, time
+import logging
 from app import app
-from flask import Flask, render_template, request
+from flask import render_template, request, Response
 from flask_wtf import form
 from app.lights.colors import *
 from threading import Thread
@@ -11,6 +11,13 @@ brightness = 100
 stop_run = False
 
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    t = Thread(target=run_pattern)
+    t.start()
+    return render_template('index.html')
+
+
 @app.route('/control', methods=['GET', 'POST'])
 def current():
     
@@ -87,14 +94,13 @@ def current():
             brightness = request.form.get('text')
             stop_run = False
 
-    run_pattern(brightness)
-
     return render_template('control.html', form=form, color=color, brightness=brightness)
 
-def run_pattern(brightness):
+def run_pattern():
     
     global color
     global stop_run
+    global brightness
     
     while not stop_run:
         if color == "RAINBOW":
@@ -124,6 +130,8 @@ def run_pattern(brightness):
         lights_on(brightness)
     if color == "OFF":
         lights_off()
+
+    return Response(run_pattern())
 
 def auto_on():
     global brightness
