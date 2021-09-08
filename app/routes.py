@@ -2,7 +2,7 @@ import logging
 from app import app
 from flask import render_template, request, Response
 from flask_wtf import form
-from app.lights.colors import *
+#from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -84,12 +84,12 @@ def current():
             brightness = request.form.get('text')
             stop_run = False
 
-        if request.form['submit_button'] == 'RAINBOW_CYCLE':
+        if request.form['submit_button'] == 'RAINBOW CYCLE':
             print("Press Rainbow Cycle Button")
             brightness = request.form.get('text')
             stop_run = False
 
-        if request.form['submit_button'] == 'RGB_TWINKLE':
+        if request.form['submit_button'] == 'RGB TWINKLE':
             print("Press Rainbow Cycle Button")
             brightness = request.form.get('text')
             stop_run = False
@@ -105,9 +105,9 @@ def run_pattern():
     while not stop_run:
         if color == "RAINBOW":
             rainbow(brightness)
-        if color == "RAINBOW_CYCLE":
+        if color == "RAINBOW CYCLE":
             rainbowCycle(brightness)
-        if color == "RGB_TWINKLE":
+        if color == "RGB TWINKLE":
             rgb_twinkle(brightness)
     
     if color == "RED":
