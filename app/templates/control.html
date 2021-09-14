@@ -43,7 +43,6 @@
             <h3>Brightness:</h3>
             <div class="distance">
                 <input name="text" maxlength="3" size="3"value={{ brightness }}>%
-                <input type=color pattern="#[a-f0-9]{6}" title="hexadecimal color" placeholder="#000000">
             {% if color == 'ON' %}
                 <h5>Current Color: WHITE</h5>
             {% elif color == 'RAINBOW' %}
@@ -51,6 +50,11 @@
             {% else %}
                 <h5>Current Color: {{ color or 'not set' }}</h5>
             {% endif %}   
+            </div>
+
+            <div>
+                <h3>Color Wheel</h3>
+                <a href="/colorwheel" class="btn on_off">To Color Wheel</a>
             </div>
 
         </form>

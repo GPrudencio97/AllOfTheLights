@@ -2,7 +2,7 @@ import logging
 from app import app
 from flask import render_template, request, Response
 from flask_wtf import form
-#from app.lights.colors import *
+from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -96,6 +96,15 @@ def current():
 
     return render_template('control.html', form=form, color=color, brightness=brightness)
 
+@app.route('/colorwheel', methods=['GET', 'POST'])
+def color_wheel():
+    if request.method == 'POST':
+        color = request.form.get('color')
+        rgbColor = color[color.find('('):color.find(')')].split(',')
+        colorChanger(rgbColor)
+    if request.method == 'GET':
+        return render_template('colorwheel.html')
+
 def run_pattern():
     
     global color
@@ -138,13 +147,13 @@ def auto_on():
     global color
 
     color = "ON"
-    run_pattern(brightness)
+    run_pattern()
     
 def auto_off():
     global color
 
     color = "OFF"
-    run_pattern(brightness)
+    run_pattern()
     
     
  
