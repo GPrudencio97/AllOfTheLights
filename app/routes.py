@@ -2,7 +2,7 @@ import logging, json
 from app import app
 from flask import render_template, request, Response
 from flask_wtf import form
-#from app.lights.colors import *
+from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -101,9 +101,12 @@ def color_wheel():
     if request.method == 'POST':
         setColor = request.get_json(force=True)
         print(setColor)
-        temp1 = setColor.get("color")
-        print(temp1)
-        colorChanger(temp1)
+        rgbColor = setColor.get("color")
+        print(rgbColor)
+        r = int(rgbColor[0])
+        g = int(rgbColor[1])
+        b = int(rgbColor[2])
+        colorChanger(r, g, b)
     if request.method == 'GET':
         return render_template('colorwheel.html')
 

@@ -144,7 +144,6 @@ def light_strips(new_brightness):
         LED_BRIGHTNESS = new_brightness
         strip.setBrightness(new_brightness)
 
-def colorChanger(rgbColor):
-    rgbColor = rgbColor
-    solid_color(strip, Color(rgbColor[0], rgbColor[1], rgbColor[2]))
+def colorChanger(r, g, b):
+    solid_color(strip, Color(r, g, b))
         
