@@ -30,54 +30,54 @@ def current():
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
+            stop_run = True
             print("Pressed Red Button")
             brightness = request.form.get('text')
-            stop_run = True
             
         if request.form['submit_button'] == 'ORANGE':
+            stop_run = True
             print("Pressed Orange Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'YELLOW':
+            stop_run = True
             print("Pressed Yellow Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'GREEN':
+            stop_run = True
             print("Pressed Green Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'BLUE':
+            stop_run = True
             print("Pressed Blue Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'INDIGO':
+            stop_run = True
             print("Pressed Indigo Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'VIOLET':
+            stop_run = True
             print("Pressed Violet Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'WHITE':
+            stop_run = True
             print("Pressed White Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'ON':
+            stop_run = True
             print("Pressed On Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'OFF':
+            stop_run = True
             print("Pressed Off Button")
             brightness = request.form.get('text')
-            stop_run = True
 
         if request.form['submit_button'] == 'RAINBOW':
             print("Pressed Rainbow Button")
@@ -94,21 +94,29 @@ def current():
             brightness = request.form.get('text')
             stop_run = False
 
+        if request.form['submit_button'] == 'COLOR PICKER':
+            print("Press Color Picker Button")
+            brightness = request.form.get('text')
+            stop_run = False
+
     return render_template('control.html', form=form, color=color, brightness=brightness)
 
-@app.route('/colorwheel', methods=['GET', 'POST'])
+@app.route('/colorpicker', methods=['GET', 'POST'])
 def color_wheel():
+    global brightness
+
     if request.method == 'POST':
         setColor = request.get_json(force=True)
         print(setColor)
-        rgbColor = setColor.get("color")
+        rgbColor = setColor.get("rgbColor")
         print(rgbColor)
         r = int(rgbColor[0])
         g = int(rgbColor[1])
         b = int(rgbColor[2])
         colorChanger(r, g, b)
     if request.method == 'GET':
-        return render_template('colorwheel.html')
+        startColorPicker()
+        return render_template('colorpicker.html')
 
 def run_pattern():
     
@@ -123,6 +131,8 @@ def run_pattern():
             rainbowCycle(brightness)
         if color == "RGB TWINKLE":
             rgb_twinkle(brightness)
+        if color == "COLORPICKER":
+            new_brightness(brightness)
     
     if color == "RED":
         red(brightness)

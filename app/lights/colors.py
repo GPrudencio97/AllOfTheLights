@@ -130,20 +130,19 @@ def rgb_twinkle(brightness, wait_s=1):
         time.sleep(wait_s)
 
 def new_brightness(brightness):
+    global strip
+    global LED_BRIGHTNESS
+
     brightness = int(brightness)
     new_brightness = int(255 * (brightness/100))
     if new_brightness != LED_BRIGHTNESS:
-        light_strips(new_brightness)
+        LED_BRIGHTNESS = new_brightness
+        strip.setBrightness(new_brightness)
     else:
         return
 
-def light_strips(new_brightness):
-    global strip
-    global LED_BRIGHTNESS
-    if new_brightness != LED_BRIGHTNESS:
-        LED_BRIGHTNESS = new_brightness
-        strip.setBrightness(new_brightness)
-
 def colorChanger(r, g, b):
-    solid_color(strip, Color(r, g, b))
-        
+    strip.setPixelColor(r, g, b)
+
+def startColorPicker():
+    strip.setPixelColor(0, 0, 0)

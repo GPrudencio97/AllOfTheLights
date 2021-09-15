@@ -52,7 +52,7 @@
             const rgbaColor = color.toRGBA().toString(0);
             console.log(rgbaColor);
             var r = /\d+/g;
-            var m = {'color': rgbaColor.match(r)};
+            var m = {'rgbColor': rgbaColor.match(r)};
             var q = JSON.stringify(m);
             $.ajax({
                 type: 'POST',
