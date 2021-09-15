@@ -6,6 +6,7 @@
     <title>Color Wheel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/> <!-- 'classic' theme -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/colorpicker.css') }}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="color-picker"></div>
@@ -47,17 +48,24 @@
             }
         });
 
-        pickr.on('change', (color, instance) => {
-            console.log(color.toRGBA().toString(0));
+        pickr.on('change', (color) => {
             const rgbaColor = color.toRGBA().toString(0);
+            console.log(rgbaColor);
+            var r = /\d+/g;
+            var m = {'color': rgbaColor.match(r)};
+            var q = JSON.stringify(m);
             $.ajax({
-                type: POST,
+                type: 'POST',
                 url: '/colorwheel',
-                data: { 'color': $('#rgbaColor').val()},
+                data:  q,
                 processData: false,
-                contentType: 'application/json',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
                 success: function(data) {
                     console.log("Success")
+                },
+                error: function(data){
+                    console.log(data)
                 },
             });
         })
