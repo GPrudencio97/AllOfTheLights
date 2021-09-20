@@ -13,6 +13,7 @@ stop_run = False
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    global t
     t = Thread(target=run_pattern)
     t.start()
     return render_template('index.html')
@@ -101,15 +102,20 @@ def current():
 
     return render_template('control.html', form=form, color=color, brightness=brightness)
 
-@app.route('/colorpicker', methods=['GET', 'POST'])
-def color_wheel():
+@app.route('/colorpicker', methods=['GET', 'PATCH'])
+def color_picker():
     global brightness
+    #global color
+    global stop_run
+    global t
 
-    if request.method == 'POST':
+    #color == 'COLOR PICKER'
+    t.kill()
+    stop_run = False
+
+    if request.method == 'PATCH':
         setColor = request.get_json(force=True)
-        print(setColor)
         rgbColor = setColor.get("rgbColor")
-        print(rgbColor)
         r = int(rgbColor[0])
         g = int(rgbColor[1])
         b = int(rgbColor[2])
@@ -131,8 +137,7 @@ def run_pattern():
             rainbowCycle(brightness)
         if color == "RGB TWINKLE":
             rgb_twinkle(brightness)
-        if color == "COLORPICKER":
-            new_brightness(brightness)
+    
     
     if color == "RED":
         red(brightness)

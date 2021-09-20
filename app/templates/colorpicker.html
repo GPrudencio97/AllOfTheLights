@@ -15,7 +15,6 @@
         const pickr = Pickr.create({
             el: '.color-picker',
             theme: 'classic', // or 'monolith', or 'nano'
-            default: 'rgba(255, 255, 255, 1)',
             swatches: [
                 'rgba(244, 67, 54, 1)',
                 'rgba(233, 30, 99, 1)',
@@ -50,14 +49,12 @@
 
         pickr.on('change', (color) => {
             const rgbaColor = color.toRGBA().toString(0);
-            console.log(rgbaColor);
             var r = /\d+/g;
             var m = {'rgbColor': rgbaColor.match(r)};
-            var q = JSON.stringify(m);
             $.ajax({
-                type: 'POST',
-                url: '/colorwheel',
-                data:  q,
+                type: 'PATCH',
+                url: '/colorpicker',
+                data:  JSON.stringify(m),
                 processData: false,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
@@ -72,4 +69,5 @@
 
     </script>
 </body>
+<a href="/index">Back</a> 
 </html>

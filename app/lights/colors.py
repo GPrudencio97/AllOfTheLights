@@ -142,7 +142,11 @@ def new_brightness(brightness):
         return
 
 def colorChanger(r, g, b):
-    strip.setPixelColor(r, g, b)
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(r, g, b))
+    strip.show()
 
 def startColorPicker():
-    strip.setPixelColor(0, 0, 0)
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
