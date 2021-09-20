@@ -2,7 +2,7 @@ import logging, json
 from app import app
 from flask import render_template, request, Response
 from flask_wtf import form
-from app.lights.colors import *
+#from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -110,7 +110,7 @@ def color_picker():
     global t
 
     #color == 'COLOR PICKER'
-    t.kill()
+    #t.kill()
     stop_run = False
 
     if request.method == 'PATCH':
@@ -121,7 +121,7 @@ def color_picker():
         b = int(rgbColor[2])
         colorChanger(r, g, b)
     if request.method == 'GET':
-        startColorPicker()
+        #startColorPicker()
         return render_template('colorpicker.html')
 
 def run_pattern():

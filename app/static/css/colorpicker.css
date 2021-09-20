@@ -1,3 +1,9 @@
 body {
     background: floralwhite;
 }
+div.pickr-container {
+    display: table;
+    margin: auto;
+    width: auto;
+    padding: 10px;
+}
