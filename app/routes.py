@@ -1,167 +1,180 @@
-import logging, sys, time
-from flask import render_template, request
+import logging, json
 from app import app
+from flask import render_template, request, Response
 from flask_wtf import form
-from flask_executor import Executor
-from app.lights.colors import *
-from threading import Event
+#from app.lights.colors import *
+from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
-    
 
-executor = Executor(app)
-exit = Event()
 color = 'NULL'
-status = "DONE"
-global brightness
+brightness = 100
+stop_run = False
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    
-    global color
-    color = request.form.get('submit_button')
+    global t
+    t = Thread(target=run_pattern)
+    t.start()
     return render_template('index.html')
+
 
 @app.route('/control', methods=['GET', 'POST'])
 def current():
     
     global color
+    global brightness
+    global stop_run
+
     color = request.form.get('submit_button')
     brightness = request.form.get('text')
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'RED':
+            stop_run = True
             print("Pressed Red Button")
             brightness = request.form.get('text')
             
-        elif request.form['submit_button'] == 'ORANGE':
+        if request.form['submit_button'] == 'ORANGE':
+            stop_run = True
             print("Pressed Orange Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'YELLOW':
+        if request.form['submit_button'] == 'YELLOW':
+            stop_run = True
             print("Pressed Yellow Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'GREEN':
+        if request.form['submit_button'] == 'GREEN':
+            stop_run = True
             print("Pressed Green Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'BLUE':
+        if request.form['submit_button'] == 'BLUE':
+            stop_run = True
             print("Pressed Blue Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'INDIGO':
+        if request.form['submit_button'] == 'INDIGO':
+            stop_run = True
             print("Pressed Indigo Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'VIOLET':
+        if request.form['submit_button'] == 'VIOLET':
+            stop_run = True
             print("Pressed Violet Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'WHITE':
+        if request.form['submit_button'] == 'WHITE':
+            stop_run = True
             print("Pressed White Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'ON':
+        if request.form['submit_button'] == 'ON':
+            stop_run = True
             print("Pressed On Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'OFF':
+        if request.form['submit_button'] == 'OFF':
+            stop_run = True
             print("Pressed Off Button")
             brightness = request.form.get('text')
 
-        elif request.form['submit_button'] == 'RAINBOW':
+        if request.form['submit_button'] == 'RAINBOW':
             print("Pressed Rainbow Button")
             brightness = request.form.get('text')
+            stop_run = False
 
-        elif request.form['submit_button'] == 'RAINBOW_CYCLE':
+        if request.form['submit_button'] == 'RAINBOW CYCLE':
             print("Press Rainbow Cycle Button")
             brightness = request.form.get('text')
+            stop_run = False
 
-    
-    run_pattern.submit(color, brightness)
-    #print("render template")
-    return render_template('control.html', form=form, color=color, brightness=brightness), color
+        if request.form['submit_button'] == 'RGB TWINKLE':
+            print("Press Rainbow Cycle Button")
+            brightness = request.form.get('text')
+            stop_run = False
 
-@executor.job
-def run_pattern(pattern, brightness):
+        if request.form['submit_button'] == 'COLOR PICKER':
+            print("Press Color Picker Button")
+            brightness = request.form.get('text')
+            stop_run = False
+
+    return render_template('control.html', form=form, color=color, brightness=brightness)
+
+@app.route('/colorpicker', methods=['GET', 'PATCH'])
+def color_picker():
+    global brightness
+    #global color
+    global stop_run
+    global t
+
+    #color == 'COLOR PICKER'
+    #t.kill()
+    stop_run = False
+
+    if request.method == 'PATCH':
+        setColor = request.get_json(force=True)
+        rgbColor = setColor.get("rgbColor")
+        r = int(rgbColor[0])
+        g = int(rgbColor[1])
+        b = int(rgbColor[2])
+        colorChanger(r, g, b)
+    if request.method == 'GET':
+        #startColorPicker()
+        return render_template('colorpicker.html')
+
+def run_pattern():
     
     global color
-    global status
-    global strip
+    global stop_run
+    global brightness
     
-    print("Run " + pattern)
-    #print(brightness)
-    try:
+    while not stop_run:
+        if color == "RAINBOW":
+            rainbow(brightness)
+        if color == "RAINBOW CYCLE":
+            rainbowCycle(brightness)
+        if color == "RGB TWINKLE":
+            rgb_twinkle(brightness)
+    
+    
+    if color == "RED":
+        red(brightness)
+    if color == "ORANGE":
+        orange(brightness)
+    if color == "YELLOW":
+        yellow(brightness)
+    if color == "GREEN":
+        green(brightness)
+    if color == "BLUE":
+        blue(brightness)
+    if color == "INDIGO":
+        indigo(brightness)
+    if color == "VIOLET":
+        violet(brightness)
+    if color == "WHITE":
+        lights_on(brightness)
+    if color == "ON":
+        lights_on(brightness)
+    if color == "OFF":
+        lights_off()
 
-        while pattern == "RAINBOW":    
-            pattern = color    
-            #print("RAINBOW IS RUNNING")
-            while status != "DONE":
-                time.sleep(1/1000)
-            status = "BEGIN"
-            #print(status)
-            status = rainbow(brightness)
-            #print(status)
-        
-        while pattern == "RAINBOW_CYCLE":
-            pattern = color
-            #print("RAINBOW CYCLE IS RUNNING")
-            while status != "DONE":
-                time.sleep(1/1000)
-            status = "BEGIN"
-            #print(status)
-            status = rainbowCycle(brightness)
-            #print(status)
-
-        while pattern == "RGB_TWINKLE":
-            pattern = color
-            #print("RGB_TWINKLE IS RUNNING")
-            while status != "DONE":
-                time.sleep(1/1000)
-            status = "BEGIN"
-            #print(status)
-            status = rgb_twinkle(brightness)
-            #print(status)
-                       
-        else:
-            while status != "DONE":
-                time.sleep(1/10000)
-                if brightness != brightness:
-                    sys.exit()
-            else:
-                #print(status)
-                status == ""
-                sys.exit()
-
-    except SystemExit:
-        if pattern == "RED":
-            red(brightness)
-        elif pattern == "ORANGE":
-            orange(brightness)
-        elif pattern == "YELLOW":
-            yellow(brightness)
-        elif pattern == "GREEN":
-            green(brightness)
-        elif pattern == "BLUE":
-            blue(brightness)
-        elif pattern == "INDIGO":
-            indigo(brightness)
-        elif pattern == "VIOLET":
-            violet(brightness)
-        elif pattern == "WHITE":
-            lights_on(brightness)
-        elif pattern == "ON":
-            lights_on(brightness)
-        else:
-            lights_off()
+    return Response(run_pattern())
 
 def auto_on():
-    default_brightness = 100
-    lights_on(default_brightness)
+    global brightness
+    global color
+
+    color = "ON"
+    run_pattern()
     
 def auto_off():
-    lights_off()
+    global color
+
+    color = "OFF"
+    run_pattern()
+    
     
  
 start = BackgroundScheduler()

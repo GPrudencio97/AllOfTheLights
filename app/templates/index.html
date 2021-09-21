@@ -1,30 +1,45 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    </head>
+    
+    <body>
+        <h1 style="text-align: center">LED Light's Color Options</h1>
 
-{% block content %}
-    <h1 style="text-align: center">LED Light's Color Options</h1>
-
-    <form method="POST" action="/control">
+        <form method="POST" action="/control">
+            
+            <h3>On/Off:</h3>
+            <div class="distance">
+                <input type="submit" name="submit_button" value="ON" class="btn on_off">
+            </div>
+            
+            <h3>Solid Colors:</h3>
+            <div class="distance">
+                <input type="submit" name="submit_button" value="RED" class="btn red">
+                <input type="submit" name="submit_button" value="ORANGE" class="btn orange">
+                <input type="submit" name="submit_button" value="YELLOW" class="btn yellow">
+                <input type="submit" name="submit_button" value="GREEN" class="btn green">
+                <input type="submit" name="submit_button" value="BLUE" class="btn blue">
+                <input type="submit" name="submit_button" value="INDIGO" class="btn indigo">
+                <input type="submit" name="submit_button" value="VIOLET" class="btn violet">
+                <input type="submit" name="submit_button" value="WHITE" class="btn white">
         
-        <h3>On/Off:</h3>
-        <input type="submit" name="submit_button" value="ON">
-        
-        <h3>Solid Colors:</h3>
-        <input type="submit" name="submit_button" value="RED" style="background-color: red; color: white;">
-        <input type="submit" name="submit_button" value="ORANGE" style="background-color: orange; color: white;">
-        <input type="submit" name="submit_button" value="YELLOW" style="background-color: yellow; color: black;">
-        <input type="submit" name="submit_button" value="GREEN" style="background-color: green; color: white;">
-        <input type="submit" name="submit_button" value="BLUE" style="background-color: blue; color: white;">
-        <input type="submit" name="submit_button" value="INDIGO" style="background-color: indigo; color: white;">
-        <input type="submit" name="submit_button" value="VIOLET" style="background-color: violet; color: white;">
-        <input type="submit" name="submit_button" value="WHITE" style="background-color: white; color: black;">
+            </div>
 
-        <h3>Patterns:</h3>
-        <input type="submit" name="submit_button" value="RAINBOW" style="background-image: linear-gradient(135deg, red,orange,green,blue,indigo,violet); color: white;">
-        <input type="submit" name="submit_button" value="RAINBOW_CYCLE" style="background-image: linear-gradient(45deg, red,orange,green,blue,indigo,violet); color:white;">
-        <input type="submit" name="submit_button" value="RGB_TWINKLE" style="background-image: linear-gradient(135deg, red,green,blue); color: white;">
 
-        <h3>Brightness:</h3>
-        <input name="text" id = "current_brightness" value="100" maxlength="3" size="3">%
-        
-    </form>
-{% endblock %}
+            <h3>Patterns:</h3>
+            <div class="distance">
+                <input type="submit" name="submit_button" value="RAINBOW" class="btn rainbow">
+                <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn rainbow_cycle">
+                <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn rgb_twinkle">
+            </div>
+
+            <h3>Brightness:</h3>
+            <div class="distance">
+                <input name="text" value="100" maxlength="3" size="3">%
+            </div>
+        </form>
+    </body>
+</html>

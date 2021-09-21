@@ -1,8 +1,6 @@
 from rpi_ws281x import *
 import time, random
 
-
-
 # LED strip configuration
 LED_COUNT      = 30      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
@@ -65,9 +63,6 @@ def rainbow(brightness, wait_ms=20, iterations=1):
             strip.setPixelColor(i, wheel((i+j) & 255))
         strip.show()
         time.sleep(wait_ms/1000.0)
-    
-    status = "DONE"
-    return status 
 
 def rainbowCycle(brightness, wait_ms=20, iterations=1):
     new_brightness(brightness)
@@ -76,9 +71,6 @@ def rainbowCycle(brightness, wait_ms=20, iterations=1):
             strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
         strip.show()
         time.sleep(wait_ms/1000.0)
-
-    status = "DONE"
-    return status
 
 def wheel(pos):
     if pos < 85:
@@ -100,72 +92,61 @@ def rgb_twinkle(brightness, wait_s=1):
             x += 1
         
         z = round(x/15)                     #edit to effect color lights/meter
-        var1 = random.randrange(0, z)           
+        w = round(x/2)
+        var1 = random.randrange(0, w)           
         var2 = random.randrange(1, 4)
         color_array = []
         color_array.append(var1) 
 
         while len(color_array) < z:
-            color_array.append(color_array[len(color_array) - 1] + z)      
-
-        #print(color_array)
+            color_array.append(color_array[len(color_array) - 1] + w)      
 
         if var2 == 1:
             y = 0
             for y in range(x):
                 if y in color_array:
                     strip.setPixelColor(y, Color(255, 0, 0))
-
                 else: 
-                    strip.setPixelColor(y, Color(255,255,255))
-                              
+                    strip.setPixelColor(y, Color(255,255,255))                     
             strip.show()
             
-        elif var2 == 2:
+        if var2 == 2:
             y = 0
             for y in range(x):
                 if y in color_array:
                     strip.setPixelColor(y, Color(0, 255, 0))
-
                 else: 
-                    strip.setPixelColor(y, Color(255,255,255))
-                    
+                    strip.setPixelColor(y, Color(255,255,255))  
             strip.show()
             
-        elif var2 == 3:
+        if var2 == 3:
             y = 0
             for y in range(x):
                 if y in color_array:
                     strip.setPixelColor(y, Color(0, 0, 255))
-
                 else: 
-                    strip.setPixelColor(y, Color(255,255,255))
-                    
+                    strip.setPixelColor(y, Color(255,255,255))            
             strip.show()
-            
-        status = "DONE"
         time.sleep(wait_s)
-        return status
 
 def new_brightness(brightness):
-    #print(LED_BRIGHTNESS)
+    global strip
+    global LED_BRIGHTNESS
+
     brightness = int(brightness)
     new_brightness = int(255 * (brightness/100))
-    #print(new_brightness)
     if new_brightness != LED_BRIGHTNESS:
-        #print(new_brightness)
-        light_strips(new_brightness)
+        LED_BRIGHTNESS = new_brightness
+        strip.setBrightness(new_brightness)
     else:
         return
 
-def light_strips(new_brightness):
-    global strip
-    global LED_BRIGHTNESS
-    #print(LED_BRIGHTNESS)
-    #print(new_brightness)
-    if new_brightness != LED_BRIGHTNESS:
-        LED_BRIGHTNESS = new_brightness
-        #print(LED_BRIGHTNESS)
-        #strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-        strip.setBrightness(new_brightness)
-        
+def colorChanger(r, g, b):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(r, g, b))
+    strip.show()
+
+def startColorPicker():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
