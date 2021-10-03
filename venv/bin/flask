@@ -1,4 +1,4 @@
-#!/home/gabe/AllOfTheLights/venv/bin/python3
+#!/Users/gabrielprudencio/Desktop/AllOfTheLights/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
