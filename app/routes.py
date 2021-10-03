@@ -1,8 +1,8 @@
 import logging, json
 from app import app
-from flask import render_template, request, Response
+from flask import render_template, request, Response, make_response
 from flask_wtf import form
-#from app.lights.colors import *
+from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -120,6 +120,7 @@ def color_picker():
         g = int(rgbColor[1])
         b = int(rgbColor[2])
         colorChanger(r, g, b)
+        return make_response("OK", 200)
     if request.method == 'GET':
         #startColorPicker()
         return render_template('colorpicker.html')
