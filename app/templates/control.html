@@ -39,24 +39,29 @@
                 <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn rainbow_cycle">
                 <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn rgb_twinkle">
             </div>
-
+        </form>
+        <form action="/colorpicker">
+            <div>
+                <h3>Color Picker</h3>
+                <input type="submit" name="submit_button" value="COLOR PICKER" class="btn on_off">
+            </div>
+        </form>
+        <form action="/numberpattern">
+            <div>
+                <h3>Numbered Patterns</h3>
+                <input type="submit" name="submit_button" value="NUMBER PATTERN" class="btn on_off">
+            </div>
+        </form>
+        <div class="distance">
             <h3>Brightness:</h3>
-            <div class="distance">
-                <input name="text" maxlength="3" size="3"value={{ brightness }}>%
+            <input name="text" maxlength="3" size="3"value={{ brightness or 100 }}>%
             {% if color == 'ON' %}
                 <h5>Current Color: WHITE</h5>
             {% elif color == 'RAINBOW' %}
                 <h5>Pattern Running: {{ color }}</h5>
             {% else %}
-                <h5>Current Color: {{ color or 'not set' }}</h5>
-            {% endif %}   
-            </div>
-
-            <div>
-                <h3>Color Wheel</h3>
-                <a href="/colorpicker" class="btn on_off" value="COLOR PICKER">To Color Wheel</a>
-            </div>
-
-        </form>
+                <h5>Current Color: {{ color or 'Color Picker' }}</h5>
+            {% endif %}
+        </div>
     </body>
 </html>

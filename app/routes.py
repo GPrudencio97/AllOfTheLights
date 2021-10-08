@@ -1,8 +1,8 @@
-import logging, json
+import logging, time
 from app import app
 from flask import render_template, request, Response, make_response
 from flask_wtf import form
-from app.lights.colors import *
+#from app.lights.colors import *
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -30,7 +30,7 @@ def current():
     brightness = request.form.get('text')
 
     if request.method == 'POST':
-        if request.form['submit_button'] == 'RED':
+        if color == 'RED':
             stop_run = True
             print("Pressed Red Button")
             brightness = request.form.get('text')
@@ -105,13 +105,11 @@ def current():
 @app.route('/colorpicker', methods=['GET', 'PATCH'])
 def color_picker():
     global brightness
-    #global color
+    global color
     global stop_run
-    global t
 
-    #color == 'COLOR PICKER'
-    #t.kill()
     stop_run = False
+    color = "COLOR PICKER"
 
     if request.method == 'PATCH':
         setColor = request.get_json(force=True)
@@ -119,11 +117,17 @@ def color_picker():
         r = int(rgbColor[0])
         g = int(rgbColor[1])
         b = int(rgbColor[2])
-        colorChanger(r, g, b)
+        #colorChanger(r, g, b)
         return make_response("OK", 200)
     if request.method == 'GET':
         #startColorPicker()
         return render_template('colorpicker.html')
+
+@app.route('/numberpattern', methods=['GET', 'PATCH'])
+def numberpattern():
+    if request.method == 'GET':
+        return render_template('numberpattern.html')
+    #if request.method == 'PATCH':
 
 def run_pattern():
     
@@ -133,33 +137,62 @@ def run_pattern():
     
     while not stop_run:
         if color == "RAINBOW":
-            rainbow(brightness)
+            #rainbow(brightness)
+            print("Run Rainbow")
+            time.sleep(5)
         if color == "RAINBOW CYCLE":
-            rainbowCycle(brightness)
+            #rainbowCycle(brightness)
+            print("Run Rainbow Cycle")
+            time.sleep(5)
         if color == "RGB TWINKLE":
-            rgb_twinkle(brightness)
+            #rgb_twinkle(brightness)
+            print("Run RGB Twinkle")
+            time.sleep(5)
+        if color == "COLOR PICKER":
+            print("Run Color Picker")
+            time.sleep(5)
     
-    
-    if color == "RED":
-        red(brightness)
-    if color == "ORANGE":
-        orange(brightness)
-    if color == "YELLOW":
-        yellow(brightness)
-    if color == "GREEN":
-        green(brightness)
-    if color == "BLUE":
-        blue(brightness)
-    if color == "INDIGO":
-        indigo(brightness)
-    if color == "VIOLET":
-        violet(brightness)
-    if color == "WHITE":
-        lights_on(brightness)
-    if color == "ON":
-        lights_on(brightness)
-    if color == "OFF":
-        lights_off()
+    while stop_run:
+        if color == "RED":
+            #red(brightness)
+            print("Run Red")
+            time.sleep(5)
+        if color == "ORANGE":
+            #orange(brightness)
+            print("Run Orange")
+            time.sleep(5)
+        if color == "YELLOW":
+            #yellow(brightness)
+            print("Run Yellow")
+            time.sleep(5)
+        if color == "GREEN":
+            #green(brightness)
+            print("Run Green")
+            time.sleep(5)
+        if color == "BLUE":
+            #blue(brightness)
+            print("Run Blue")
+            time.sleep(5)
+        if color == "INDIGO":
+            #indigo(brightness)
+            print("Run Indigo")
+            time.sleep(5)
+        if color == "VIOLET":
+           #violet(brightness)
+            print("Run Violet")
+            time.sleep(5)
+        if color == "WHITE":
+            #lights_on(brightness)
+            print("Run White")
+            time.sleep(5)
+        if color == "ON":
+            #lights_on(brightness)
+            print("Run ON")
+            time.sleep(5)
+        if color == "OFF":
+            #lights_off()
+            print("Run Off")
+            time.sleep(5)
 
     return Response(run_pattern())
 
