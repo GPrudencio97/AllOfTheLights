@@ -28,7 +28,6 @@ def current():
     brightness = request.form.get('text')
 
     event_object.set()
-    event_object.clear()
 
     if request.method == 'POST':
 
@@ -66,26 +65,24 @@ def current():
 
         if request.form['submit_button'] == 'ON':
             print("Pressed On Button")
-            brightness = request.form.get('text')
+            brightness = request.form.get('text')    
 
         if request.form['submit_button'] == 'OFF':
             print("Pressed Off Button")
             brightness = request.form.get('text')
 
+
         if request.form['submit_button'] == 'RAINBOW':
             print("Pressed Rainbow Button")
             brightness = request.form.get('text')
-            event_object.set()
 
         if request.form['submit_button'] == 'RAINBOW CYCLE':
             print("Press Rainbow Cycle Button")
             brightness = request.form.get('text')
-            event_object.set()
 
         if request.form['submit_button'] == 'RGB TWINKLE':
             print("Press Rainbow Cycle Button")
             brightness = request.form.get('text')
-            event_object.set()
 
     return render_template('control.html', form=form, color=color, brightness=brightness)
 
@@ -108,7 +105,7 @@ def color_picker():
         event_object.set()
         event_object.clear()
         return render_template('colorpicker.html')
-        event_object.wait()
+        
 
 
 # def run_pattern():
@@ -139,6 +136,8 @@ def run_pattern():
     global color
     global brightness
 
+    event_object.clear()
+
     print(f'{color} running')
 
     # color_func = color.lower().replace(" ", "_")
@@ -148,7 +147,7 @@ def run_pattern():
         rainbow(brightness)
         time.sleep(5)
     elif color == "RAINBOW CYCLE":
-        rainbowCycle(brightness)
+        rainbow_cycle(brightness)
         time.sleep(5)
     elif color == "RGB TWINKLE":
         rgb_twinkle(brightness)
@@ -189,6 +188,7 @@ def run_pattern():
     print(f'{color} waiting')
     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE":
         event_object.wait()
+        
 
     return Response(run_pattern())
 
