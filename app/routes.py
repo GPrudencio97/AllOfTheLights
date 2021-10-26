@@ -7,16 +7,32 @@ import threading
 from apscheduler.schedulers.background import BackgroundScheduler
 
 event_object = threading.Event()
-color = 'NULL'
+color = 'OFF'
 brightness = 100
-
+z = False
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    t = threading.Thread(target=run_pattern)
-    t.start()
-    return render_template('index.html')
+    global z
+    global color
+
+    if z == True:
+        event_object.set()
+        print("Thread is already running")
+        if request.method == 'POST':
+            color = request.form.get('submit_button')
+            if request.form['submit_button'] == 'ON':
+                print("Pressed On Button")
+            if request.form['submit_button'] == 'OFF':
+                print("Pressed Off Button")
+        return render_template('index.html', form=form, color=color)
+    else:
+        z = True
+        t = threading.Thread(target=run_pattern)
+        t.start()
+        print("Thread has started")
+        return render_template('index.html', form=form, color=color)
 
 
 @app.route('/control', methods=['GET', 'POST'])
@@ -24,12 +40,12 @@ def current():
     global color
     global brightness
 
-    color = request.form.get('submit_button')
-    brightness = request.form.get('text')
-
     event_object.set()
 
     if request.method == 'POST':
+
+        color = request.form.get('submit_button')
+        brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'RED':
             print("Pressed Red Button")
@@ -71,7 +87,6 @@ def current():
             print("Pressed Off Button")
             brightness = request.form.get('text')
 
-
         if request.form['submit_button'] == 'RAINBOW':
             print("Pressed Rainbow Button")
             brightness = request.form.get('text')
@@ -101,12 +116,19 @@ def color_picker():
         colorChanger(r, g, b)
         return make_response("OK", 200)
     if request.method == 'GET':
+        color = 'COLOR PICKER'
         startColorPicker()
         event_object.set()
         event_object.clear()
-        return render_template('colorpicker.html')
+        return render_template('colorpicker.html', color=color)
         
+@app.route('/numberpattern', methods=['GET', 'PATCH'])
+def numberpattern():
+    global color
 
+    if request.method == 'GET':
+        color = 'NUMBER PATTERN'
+        return render_template('numberpattern.html', color=color)
 
 # def run_pattern():
 #     global color

@@ -1,67 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
-    </head>
-    
-    <body>
-        <h1 style="text-align: center">LED Light's Color Options</h1>
+{% extends "base.html" %}
 
-        <form method="POST" action="/control">
-            
-            <h3>On/Off:</h3>
-            <div class="distance">
-                {% if color != 'OFF' %}
-                    <input type="submit" name="submit_button" value="OFF" class="btn on_off">
-                {% else %}
-                    <input type="submit" name="submit_button" value="ON" class="btn on_off">
-                {% endif %}
+{% block content %}
+<form id="test" method="POST" action="/control">
+    <div class="span9">
+        <div class="content">
+            <div class="btn-controls">
+                <div class="btn-box-row row-fluid">
+                    <div class="distance">
+                        <h2>Solid Colors:</h2>
+                        <input type="submit" name="submit_button" value="RED" class="btn-box red big span4"/>
+                        <input type="submit" name="submit_button" value="ORANGE" class="btn-box orange big span4"/>
+                        <input type="submit" name="submit_button" value="YELLOW" class="btn-box yellow big span4"/>
+                        <input type="submit" name="submit_button" value="GREEN" class="btn-box green big span4"/>
+                        <input type="submit" name="submit_button" value="BLUE" class="btn-box blue big span4"/>
+                        <input type="submit" name="submit_button" value="INDIGO" class="btn-box indigo big span4"/>
+                        <input type="submit" name="submit_button" value="VIOLET" class="btn-box violet big span4"/>
+                        <input type="submit" name="submit_button" value="WHITE" class="btn-box white big span4"/>
+                    </div>
+                    <div class="distance">
+                        <h2>Patterns</h2>
+                        <input type="submit" name="submit_button" value="RAINBOW" class="btn-box rainbow big span4"/>
+                        <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn-box rainbow_cycle big span4"/>
+                        <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn-box rgb_twinkle big span4"/>
+                    </div>
                 </div>
-            
-            <h3>Solid Colors:</h3>
-            <div class="distance">
-                <input type="submit" name="submit_button" value="RED" class="btn red">
-                <input type="submit" name="submit_button" value="ORANGE" class="btn orange">
-                <input type="submit" name="submit_button" value="YELLOW" class="btn yellow">
-                <input type="submit" name="submit_button" value="GREEN" class="btn green">
-                <input type="submit" name="submit_button" value="BLUE" class="btn blue">
-                <input type="submit" name="submit_button" value="INDIGO" class="btn indigo">
-                <input type="submit" name="submit_button" value="VIOLET" class="btn violet">
-                <input type="submit" name="submit_button" value="WHITE" class="btn white">
-        
             </div>
-
-
-            <h3>Patterns:</h3>
-            <div class="distance">
-                <input type="submit" name="submit_button" value="RAINBOW" class="btn rainbow">
-                <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn rainbow_cycle">
-                <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn rgb_twinkle">
-            </div>
-        </form>
-        <form action="/colorpicker">
-            <div>
-                <h3>Color Picker</h3>
-                <input type="submit" name="submit_button" value="COLOR PICKER" class="btn on_off">
-            </div>
-        </form>
-        <form action="/numberpattern">
-            <div>
-                <h3>Numbered Patterns</h3>
-                <input type="submit" name="submit_button" value="NUMBER PATTERN" class="btn on_off">
-            </div>
-        </form>
-        <div class="distance">
-            <h3>Brightness:</h3>
-            <input name="text" maxlength="3" size="3"value={{ brightness or 100 }}>%
-            {% if color == 'ON' %}
-                <h5>Current Color: WHITE</h5>
-            {% elif color == 'RAINBOW' %}
-                <h5>Pattern Running: {{ color }}</h5>
-            {% else %}
-                <h5>Current Color: {{ color or 'Color Picker' }}</h5>
-            {% endif %}
+            <!--/.module-->
         </div>
-    </body>
-</html>
+        <!--/.content-->
+    </div>
+</form>
+<!--/.span9-->
+{% endblock %}

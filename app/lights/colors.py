@@ -196,7 +196,7 @@ def colorChanger(r, g, b):
             strip.setPixelColor(i, Color(r, g, b))
         strip.show()
      else:
-        print("Starting Color Changer")
+        print("Changing Color Changer")
 
 def startColorPicker():
      if check == True:
