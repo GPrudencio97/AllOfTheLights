@@ -1,45 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
-    </head>
-    
-    <body>
-        <h1 style="text-align: center">LED Light's Color Options</h1>
+{% extends "base.html" %}
 
-        <form method="POST" action="/control">
-            
-            <h3>On/Off:</h3>
-            <div class="distance">
-                <input type="submit" name="submit_button" value="ON" class="btn on_off">
+{% block content %}
+        <div class="span9">
+            <div class="content">
+                <div class="btn-controls">
+                    <div class="btn-box-row row-fluid">
+                        <a href="/control" class="btn-box big span4"><i class=" icon-arrow-right"></i><b>Main Controller</b>
+                            <p class="text-muted">
+                                Click Me!</p></a><a href="/colorpicker" class="btn-box big span4"><i class="icon-arrow-right"></i><b>Rainbow Color Picker</b>
+                        <p class="text-muted">
+                            Click Me!</p>
+                    </a><a href="/numberpattern" class="btn-box big span4"><i class="icon-arrow-right"></i><b>Numbered Patterns</b>
+                        <p class="text-muted">
+                            Click Me!</p>
+                    </a>
+                    </div>
+                    <div class="btn-box-row row-fluid">
+                        <a href="/reds" class="btn-box big span4"><i class="icon-arrow-right"></i><b>Reds</b>
+                        <p class="text-muted">
+                            Click Me!</p>
+                    </a><a href="/greens" class="btn-box big span4"><i class="icon-arrow-right"></i><b>Greens</b>
+                        <p class="text-muted">
+                            Click Me!</p>
+                    </a><a href="/blues" class="btn-box big span4"><i class="icon-arrow-right"></i><b>Blues</b>
+                        <p class="text-muted">
+                            Click Me!</p>
+                    </a>
+                    </div>
+                </div>
+                <!--/.module-->
             </div>
-            
-            <h3>Solid Colors:</h3>
-            <div class="distance">
-                <input type="submit" name="submit_button" value="RED" class="btn red">
-                <input type="submit" name="submit_button" value="ORANGE" class="btn orange">
-                <input type="submit" name="submit_button" value="YELLOW" class="btn yellow">
-                <input type="submit" name="submit_button" value="GREEN" class="btn green">
-                <input type="submit" name="submit_button" value="BLUE" class="btn blue">
-                <input type="submit" name="submit_button" value="INDIGO" class="btn indigo">
-                <input type="submit" name="submit_button" value="VIOLET" class="btn violet">
-                <input type="submit" name="submit_button" value="WHITE" class="btn white">
-        
-            </div>
-
-
-            <h3>Patterns:</h3>
-            <div class="distance">
-                <input type="submit" name="submit_button" value="RAINBOW" class="btn rainbow">
-                <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn rainbow_cycle">
-                <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn rgb_twinkle">
-            </div>
-
-            <h3>Brightness:</h3>
-            <div class="distance">
-                <input name="text" value="100" maxlength="3" size="3">%
-            </div>
-        </form>
-    </body>
-</html>
+            <!--/.content-->
+        </div>
+<!--/.span9-->
+{% endblock %}

@@ -1,14 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% if title %} 
-        <title style="text-align:center">{{ title }} - All of the Lights!</title>
-        {% endif %} 
+        <title>All Of The Lights</title>
+        <link type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ url_for('static', filename='images/icons/css/font-awesome.css') }}" rel="stylesheet">
+        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/> <!-- 'classic' theme -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/colorpicker.css') }}"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </head>
-    <body style = "background-color: rgb(244, 244, 255)">
-        <div style="text-align:center">All of the Lights!</div>
-        <hr>
-        {% block content %}{% endblock %}
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/index"><i class="icon-star-empty"></i> All Of The Lights </a>
+                    <ul class="nav pull-right">
+                        <form id="test" method="POST" action="?" style="padding-top: 5px">
+                            {% if color == 'OFF' or color == '' %}
+                                <input type="submit" name="submit_button" value="ON" class="white"/>
+                            {% else %}
+                                <input type="submit" name="submit_button" value="OFF" class="white"/>
+                            {% endif %}
+                            <div>
+                                <h6>Current Color: {{ color or 'OFF' }}</h6>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+                    <!-- /.nav-collapse -->
+            </div>
+            <!-- /navbar-inner -->
+        </div>
+        <!-- /navbar -->
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="span3">
+                        <div class="sidebar">
+                            <ul class="widget widget-menu unstyled">
+                                <li class="active"><a href="/index"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li>
+                                <li class="active"><a href="/control"><i class="menu-icon icon-arrow-right"></i>Main Controller</a></li>
+                                <li><a href="/colorpicker"><i class="menu-icon icon-arrow-right"></i>Color Picker</a></li>
+                                <li><a href="/numberpattern"><i class="menu-icon icon-arrow-right"></i>Numbered Patterns</a></li>
+                                <li><a href="/reds"><i class="menu-icon icon-arrow-right"></i>Reds</a></li>
+                                <li><a href="/greens"><i class="menu-icon icon-arrow-right"></i>Greens</a></li>
+                                <li><a href="/blues"><i class="menu-icon icon-arrow-right"></i>Blues</a></li>
+                            </ul>
+                        </div>
+                        <!--/.sidebar-->
+                    </div>
+                    <!--/.span3-->
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container">
+                <b class="copyright">&copy; 2021 All Of The Lights </b>Test
+                <div class="slidecontainer pull-right">
+                    <b>Brightness: </b><input type="range" min="1" max="100" value={{ brightness or 100 }} class="slider" id="myRange">
+                    <p>Value: <span id="value"></span>%</p>
+                </div>
+            </div>
+        </div>
+<!--        <script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>-->
+<!--        <script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>-->
+<!--        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
+<!--        <script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>-->
+<!--        <script src="scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>-->
+<!--        <script src="scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>-->
+<!--        <script src="scripts/common.js" type="text/javascript"></script>-->
+
     </body>
 </html>
+<script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("value");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+      $.ajax({
+        type: 'PATCH',
+        data:  JSON.stringify(output.innerHTML),
+        processData: false,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log("Success")
+        },
+        error: function(data){
+            console.log(data)
+        },
+    })
+    }
+</script>

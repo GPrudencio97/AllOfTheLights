@@ -77,8 +77,63 @@ div.distance{
         padding:5px 10px;
     }
 
+    .crimson{
+        background-color: crimson;
+        color: white;
+    }
+
+    .vermilion{
+        background-color: rgb(227,65, 52);
+        color: white;
+    }
+
+    .ruby{
+        background-color: rgb(224, 17, 95);
+        color: white;
+    }
+
+    .pink{
+        background-color: pink;
+        color: white;
+    }
+
+    .hotpink{
+        background-color: hotpink;
+        color: white;
+    }
+
+    .deeppink{
+        background-color: deeppink;
+        color: white;
+    }
+
+    .fuchsiapink{
+        background-color: rgb(255, 20, 147);
+        color: white;
+    }
+
+    .orangered{
+        background-color: orangered;
+        color: white;
+    }
+
+    .yelloworange{
+        background-color: rgb(255, 174, 66);
+        color: white;
+    }
+
+    .burntorange{
+        background-color: rgb(204, 85, 0);
+        color: white;
+    }
+
+
 input[type=text]{
     padding: 5px 10px;
+}
+
+.slider:hover {
+  opacity: 1;
 }
 
 
