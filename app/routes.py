@@ -11,31 +11,39 @@ color = 'OFF'
 brightness = 100
 z = False
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+
+@app.route('/', methods=['GET', 'POST', 'PATCH'])
+@app.route('/index', methods=['GET', 'POST', 'PATCH'])
 def index():
     global z
     global color
+    global brightness
 
     if z == True:
-        event_object.set()
-        print("Thread is already running")
         if request.method == 'POST':
+            event_object.set()
+            print("Thread is already running")
             color = request.form.get('submit_button')
             if request.form['submit_button'] == 'ON':
                 print("Pressed On Button")
             if request.form['submit_button'] == 'OFF':
                 print("Pressed Off Button")
-        return render_template('index.html', form=form, color=color)
+            return render_template('index.html', form=form, color=color, brightness=brightness)
+        elif request.method == 'PATCH':
+            event_object.set()
+            brightness = request.get_json(force=True)
+            return make_response("OK", 200)
+        else:
+            return render_template('index.html', form=form, color=color, brightness=brightness)
     else:
         z = True
         t = threading.Thread(target=run_pattern)
         t.start()
         print("Thread has started")
-        return render_template('index.html', form=form, color=color)
+        return render_template('index.html', form=form, color=color, brightness=brightness)
 
 
-@app.route('/control', methods=['GET', 'POST'])
+@app.route('/control', methods=['GET', 'POST', 'PATCH'])
 def current():
     global color
     global brightness
@@ -45,83 +53,90 @@ def current():
     if request.method == 'POST':
 
         color = request.form.get('submit_button')
-        brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'RED':
             print("Pressed Red Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'ORANGE':
             print("Pressed Orange Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'YELLOW':
             print("Pressed Yellow Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'GREEN':
             print("Pressed Green Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'BLUE':
             print("Pressed Blue Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'INDIGO':
             print("Pressed Indigo Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'VIOLET':
             print("Pressed Violet Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'WHITE':
             print("Pressed White Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'ON':
             print("Pressed On Button")
-            brightness = request.form.get('text')    
 
         if request.form['submit_button'] == 'OFF':
             print("Pressed Off Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'RAINBOW':
             print("Pressed Rainbow Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'RAINBOW CYCLE':
             print("Press Rainbow Cycle Button")
-            brightness = request.form.get('text')
 
         if request.form['submit_button'] == 'RGB TWINKLE':
             print("Press Rainbow Cycle Button")
-            brightness = request.form.get('text')
 
-    return render_template('control.html', form=form, color=color, brightness=brightness)
+        return render_template('control.html', form=form, color=color, brightness=brightness)
+
+    elif request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+
+    else:
+        return render_template('control.html', form=form, color=color, brightness=brightness)
 
 
-@app.route('/colorpicker', methods=['GET', 'PATCH'])
+@app.route('/colorpicker', methods=['GET', 'POST', 'PATCH'])
 def color_picker():
     global brightness
     global color
 
     if request.method == 'PATCH':
-        setColor = request.get_json(force=True)
-        rgbColor = setColor.get("rgbColor")
-        r = int(rgbColor[0])
-        g = int(rgbColor[1])
-        b = int(rgbColor[2])
-        colorChanger(r, g, b)
-        return make_response("OK", 200)
+        data = request.get_json(force=True)
+        if len(data) == 1:
+            setColor = data
+            rgbColor = setColor.get("rgbColor")
+            r = int(rgbColor[0])
+            g = int(rgbColor[1])
+            b = int(rgbColor[2])
+            color_changer(r, g, b)
+            return make_response("OK", 200)
+        else:
+            brightness = data
+            new_brightness(brightness)
+            return make_response("OK", 200)
     if request.method == 'GET':
         color = 'COLOR PICKER'
-        startColorPicker()
         event_object.set()
         event_object.clear()
-        return render_template('colorpicker.html', color=color)
-        
+        return render_template('colorpicker.html', form=form, color=color, brightness=brightness)
+    if request.method == 'POST':
+        event_object.set()
+        color = request.form.get('submit_button')
+        if request.form['submit_button'] == 'ON':
+            print("Pressed On Button")
+        if request.form['submit_button'] == 'OFF':
+            print("Pressed Off Button")
+        return render_template('colorpicker.html', form=form, color=color, brightness=brightness)
+
+
 @app.route('/numberpattern', methods=['GET', 'PATCH'])
 def numberpattern():
     global color
@@ -130,6 +145,196 @@ def numberpattern():
         color = 'NUMBER PATTERN'
         return render_template('numberpattern.html', color=color)
 
+
+@app.route('/reds', methods=['GET', 'POST', 'PATCH'])
+def reds():
+    global color
+    global brightness
+
+    event_object.set()
+
+    if request.method == 'POST':
+
+        color = request.form.get('submit_button')
+
+        if request.form['submit_button'] == 'RED':
+            print("Pressed Red Button")
+
+        if request.form['submit_button'] == 'CRIMSON':
+            print("Pressed Crimson Button")
+
+        if request.form['submit_button'] == 'VERMILION':
+            print("Pressed Vermilion Button")
+
+        if request.form['submit_button'] == 'RUBY':
+            print("Pressed Ruby Button")
+
+        if request.form['submit_button'] == 'PINK':
+            print("Pressed Pink Button")
+
+        if request.form['submit_button'] == 'HOT PINK':
+            print("Pressed Hot Pink Button")
+
+        if request.form['submit_button'] == 'DEEP PINK':
+            print("Pressed Deep Pink Button")
+
+        if request.form['submit_button'] == 'FUCHSIA PINK':
+            print("Pressed Fuchsia Pink Button")
+
+        if request.form['submit_button'] == 'ORANGE':
+            print("Pressed Orange Button")
+
+        if request.form['submit_button'] == 'ORANGERED':
+            print("Pressed Orangered Button")
+
+        if request.form['submit_button'] == 'YELLOW ORANGE':
+            print("Pressed Yellow Orange Button")
+
+        if request.form['submit_button'] == 'BURNT ORANGE':
+            print("Press Burnt Orange Button")
+
+        if request.form['submit_button'] == 'ON':
+            print("Pressed On Button")
+
+        if request.form['submit_button'] == 'OFF':
+            print("Pressed Off Button")
+
+        return render_template('reds.html', form=form, color=color, brightness=brightness)
+
+    elif request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+
+    else:
+        return render_template('reds.html', form=form, color=color, brightness=brightness)
+
+
+@app.route('/blues', methods=['GET', 'POST', 'PATCH'])
+def blues():
+    global color
+    global brightness
+
+    event_object.set()
+
+    if request.method == 'POST':
+
+        color = request.form.get('submit_button')
+
+        if request.form['submit_button'] == 'RED':
+            print("Pressed Red Button")
+
+        if request.form['submit_button'] == 'CRIMSON':
+            print("Pressed Crimson Button")
+
+        if request.form['submit_button'] == 'VERMILION':
+            print("Pressed Vermilion Button")
+
+        if request.form['submit_button'] == 'RUBY':
+            print("Pressed Ruby Button")
+
+        if request.form['submit_button'] == 'PINK':
+            print("Pressed Pink Button")
+
+        if request.form['submit_button'] == 'HOT PINK':
+            print("Pressed Hot Pink Button")
+
+        if request.form['submit_button'] == 'DEEP PINK':
+            print("Pressed Deep Pink Button")
+
+        if request.form['submit_button'] == 'FUCHSIA PINK':
+            print("Pressed Fuchsia Pink Button")
+
+        if request.form['submit_button'] == 'ORANGE':
+            print("Pressed Orange Button")
+
+        if request.form['submit_button'] == 'ORANGERED':
+            print("Pressed Orangered Button")
+
+        if request.form['submit_button'] == 'YELLOW ORANGE':
+            print("Pressed Yellow Orange Button")
+
+        if request.form['submit_button'] == 'BURNT ORANGE':
+            print("Press Burnt Orange Button")
+
+        if request.form['submit_button'] == 'ON':
+            print("Pressed On Button")
+
+        if request.form['submit_button'] == 'OFF':
+            print("Pressed Off Button")
+
+        return render_template('blues.html', form=form, color=color, brightness=brightness)
+
+    elif request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+
+    else:
+        return render_template('blues.html', form=form, color=color, brightness=brightness)
+
+
+@app.route('/greens', methods=['GET', 'POST', 'PATCH'])
+def greens():
+    global color
+    global brightness
+
+    event_object.set()
+
+    if request.method == 'POST':
+
+        color = request.form.get('submit_button')
+
+        if request.form['submit_button'] == 'RED':
+            print("Pressed Red Button")
+
+        if request.form['submit_button'] == 'CRIMSON':
+            print("Pressed Crimson Button")
+
+        if request.form['submit_button'] == 'VERMILION':
+            print("Pressed Vermilion Button")
+
+        if request.form['submit_button'] == 'RUBY':
+            print("Pressed Ruby Button")
+
+        if request.form['submit_button'] == 'PINK':
+            print("Pressed Pink Button")
+
+        if request.form['submit_button'] == 'HOT PINK':
+            print("Pressed Hot Pink Button")
+
+        if request.form['submit_button'] == 'DEEP PINK':
+            print("Pressed Deep Pink Button")
+
+        if request.form['submit_button'] == 'FUCHSIA PINK':
+            print("Pressed Fuchsia Pink Button")
+
+        if request.form['submit_button'] == 'ORANGE':
+            print("Pressed Orange Button")
+
+        if request.form['submit_button'] == 'ORANGERED':
+            print("Pressed Orangered Button")
+
+        if request.form['submit_button'] == 'YELLOW ORANGE':
+            print("Pressed Yellow Orange Button")
+
+        if request.form['submit_button'] == 'BURNT ORANGE':
+            print("Press Burnt Orange Button")
+
+        if request.form['submit_button'] == 'ON':
+            print("Pressed On Button")
+
+        if request.form['submit_button'] == 'OFF':
+            print("Pressed Off Button")
+
+        return render_template('greens.html', form=form, color=color, brightness=brightness)
+
+    elif request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+
+    else:
+        return render_template('greens.html', form=form, color=color, brightness=brightness)
+
+    
 # def run_pattern():
 #     global color
 #     global brightness
@@ -162,72 +367,104 @@ def run_pattern():
 
     print(f'{color} running')
 
-    # color_func = color.lower().replace(" ", "_")
-    # locals()[color_func]()
-
     if color == "RAINBOW":
         rainbow(brightness)
-        time.sleep(5)
     elif color == "RAINBOW CYCLE":
         rainbow_cycle(brightness)
-        time.sleep(5)
     elif color == "RGB TWINKLE":
         rgb_twinkle(brightness)
-        time.sleep(5)
     elif color == "RED":
-        red(brightness)
+        status_array = [brightness, 255, 0, 0]
+        set_color(status_array)
         pass
     elif color == "ORANGE":
-        orange(brightness)
+        status_array = [brightness, 255, 165, 0]
+        set_color(status_array)
         pass
     elif color == "YELLOW":
-        yellow(brightness)
+        status_array = [brightness, 255, 255, 0]
+        set_color(status_array)
         pass
     elif color == "GREEN":
-        green(brightness)
+        status_array = [brightness, 0, 255, 0]
+        set_color(status_array)
         pass
     elif color == "BLUE":
-        blue(brightness)
+        status_array = [brightness, 0, 0, 255]
+        set_color(status_array)
         pass
     elif color == "INDIGO":
-        indigo(brightness)
+        status_array = [brightness, 75, 0, 130]
+        set_color(status_array)
         pass
     elif color == "VIOLET":
-        violet(brightness)
+        status_array = [brightness, 238, 130, 238]
+        set_color(status_array)
         pass
     elif color == "WHITE":
-        lights_on(brightness)
+        status_array = [brightness, 255, 255, 255]
+        set_color(status_array)
         pass
     elif color == "ON":
-        lights_on(brightness)
+        status_array = [brightness, 255, 255, 255]
+        set_color(status_array)
         pass
     elif color == "OFF":
-        lights_off()
+        status_array = [brightness, 0, 0, 0]
+        set_color(status_array)
         pass
+    elif color == "CRIMSON":
+        status_array = [brightness, 220, 20, 60]
+        set_color(status_array)
+    elif color == "VERMILION":
+        status_array = [brightness, 227, 66, 52]
+        set_color(status_array)
+    elif color == "RUBY":
+        status_array = [brightness, 224, 17, 95]
+        set_color(status_array)
+    elif color == "PINK":
+        status_array = [brightness, 255, 192, 203]
+        set_color(status_array)
+    elif color == "HOT PINK":
+        status_array = [brightness, 255, 105, 180]
+        set_color(status_array)
+    elif color == "DEEP PINK":
+        status_array = [brightness, 255, 20, 147]
+        set_color(status_array)
+    elif color == "FUCHSIA PINK":
+        status_array = [brightness, 255, 119, 255]
+        set_color(status_array)
+    elif color == "ORANGERED":
+        status_array = [brightness, 255, 69, 0]
+        set_color(status_array)
+    elif color == "YELLOW ORANGE":
+        status_array = [brightness, 255, 174, 66]
+        set_color(status_array)
+    elif color == "BURNT ORANGE":
+        status_array = [brightness, 204, 85, 0]
+        set_color(status_array)
     else:
         print(f'Invalid color: {color}')
 
     print(f'{color} waiting')
     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE":
         event_object.wait()
-        
 
     return Response(run_pattern())
 
 
 def auto_on():
-    global brightness
     global color
 
+    event_object.set()
     color = "ON"
-    run_pattern()
 
 
 def auto_off():
     global color
 
+    event_object.set()
     color = "OFF"
-    run_pattern()
 
 
 start = BackgroundScheduler()

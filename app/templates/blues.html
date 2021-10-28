@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form id="colors" method="POST" action="/blues">
+    <div class="span9">
+        <div class="content">
+            <div class="btn-controls">
+                <div class="btn-box-row row-fluid">
+                    <div class="distance">
+                        <h2>Shades of Blue:</h2>
+                        <input type="submit" name="submit_button" value="RED" class="btn-box red big span4"/>
+                        <input type="submit" name="submit_button" value="CRIMSON" class="btn-box crimson big span4"/>
+                        <input type="submit" name="submit_button" value="VERMILION" class="btn-box vermilion big span4"/>
+                        <input type="submit" name="submit_button" value="RUBY" class="btn-box ruby big span4"/>
+                        <input type="submit" name="submit_button" value="PINK" class="btn-box pink big span4"/>
+                        <input type="submit" name="submit_button" value="HOT PINK" class="btn-box hotpink big span4"/>
+                        <input type="submit" name="submit_button" value="DEEP PINK" class="btn-box deeppink big span4"/>
+                        <input type="submit" name="submit_button" value="FUCHSIA PINK" class="btn-box fuchsiapink big span4"/>
+                        <input type="submit" name="submit_button" value="ORANGE" class="btn-box orange big span4"/>
+                        <input type="submit" name="submit_button" value="ORANGERED" class="btn-box orangered big span4"/>
+                        <input type="submit" name="submit_button" value="YELLOW ORANGE" class="btn-box yelloworange big span4"/>
+                        <input type="submit" name="submit_button" value="BURNT ORANGE" class="btn-box burntorange big span4"/>
+                    </div>
+                </div>
+            </div>
+            <!--/.module-->
+        </div>
+        <!--/.content-->
+    </div>
+</form>
+<!--/.span9-->
+{% endblock %}
