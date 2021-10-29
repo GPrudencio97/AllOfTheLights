@@ -8,18 +8,18 @@
                 <div class="btn-box-row row-fluid">
                     <div class="distance">
                         <h2>Shades of Blue:</h2>
-                        <input type="submit" name="submit_button" value="RED" class="btn-box red big span4"/>
-                        <input type="submit" name="submit_button" value="CRIMSON" class="btn-box crimson big span4"/>
-                        <input type="submit" name="submit_button" value="VERMILION" class="btn-box vermilion big span4"/>
-                        <input type="submit" name="submit_button" value="RUBY" class="btn-box ruby big span4"/>
-                        <input type="submit" name="submit_button" value="PINK" class="btn-box pink big span4"/>
-                        <input type="submit" name="submit_button" value="HOT PINK" class="btn-box hotpink big span4"/>
-                        <input type="submit" name="submit_button" value="DEEP PINK" class="btn-box deeppink big span4"/>
-                        <input type="submit" name="submit_button" value="FUCHSIA PINK" class="btn-box fuchsiapink big span4"/>
-                        <input type="submit" name="submit_button" value="ORANGE" class="btn-box orange big span4"/>
-                        <input type="submit" name="submit_button" value="ORANGERED" class="btn-box orangered big span4"/>
-                        <input type="submit" name="submit_button" value="YELLOW ORANGE" class="btn-box yelloworange big span4"/>
-                        <input type="submit" name="submit_button" value="BURNT ORANGE" class="btn-box burntorange big span4"/>
+                        <input type="submit" name="submit_button" value="BLUE" class="btn-box blue big span4"/>
+                        <input type="submit" name="submit_button" value="ROYAL BLUE" class="btn-box royalblue big span4"/>
+                        <input type="submit" name="submit_button" value="NAVY" class="btn-box navy big span4"/>
+                        <input type="submit" name="submit_button" value="DEEP SKY BLUE" class="btn-box deepskyblue big span4"/>
+                        <input type="submit" name="submit_button" value="ELECTRIC BLUE" class="btn-box electricblue big span4"/>
+                        <input type="submit" name="submit_button" value="CYAN" class="btn-box cyan big span4"/>
+                        <input type="submit" name="submit_button" value="IMPERIAL BLUE" class="btn-box imperialblue big span4"/>
+                        <input type="submit" name="submit_button" value="PURPLE" class="btn-box purple big span4"/>
+                        <input type="submit" name="submit_button" value="DARK SLATE BLUE" class="btn-box darkslateblue big span4"/>
+                        <input type="submit" name="submit_button" value="LAVENDER" class="btn-box lavender big span4"/>
+                        <input type="submit" name="submit_button" value="AMETHYST" class="btn-box amethyst big span4"/>
+                        <input type="submit" name="submit_button" value="ROYAL PURPLE" class="btn-box royalpurple big span4"/>
                     </div>
                 </div>
             </div>
@@ -28,5 +28,17 @@
         <!--/.content-->
     </div>
 </form>
+<ul class="nav pull-right">
+    <form method="POST" action="/blues">
+        {% if state == 'WIPE' %}
+        <input type="submit" name="state_button" value="SOLID" class="white"/>
+        {% else %}
+        <input type="submit" name="state_button" value="WIPE" class="white"/>
+        {% endif %}
+        <div>
+            <h6>Current Color State: {{ state }}</h6>
+        </div>
+    </form>
+</ul>
 <!--/.span9-->
 {% endblock %}

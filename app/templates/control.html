@@ -30,5 +30,17 @@
         <!--/.content-->
     </div>
 </form>
+<ul class="nav pull-right">
+    <form method="POST" action="/control">
+        {% if state == 'WIPE' %}
+        <input type="submit" name="state_button" value="SOLID" class="white"/>
+        {% else %}
+        <input type="submit" name="state_button" value="WIPE" class="white"/>
+        {% endif %}
+        <div>
+            <h6>Current Color State: {{ state }}</h6>
+        </div>
+    </form>
+</ul>
 <!--/.span9-->
 {% endblock %}

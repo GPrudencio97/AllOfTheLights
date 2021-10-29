@@ -29,21 +29,28 @@ except Exception:
 
 def set_color(status_array):
     if check == True:
-        if status_array[1] == 0 and status_array[2] == 0 and status_array[3] == 0:
-            solid_color(strip, Color(int(status_array[1]), int(status_array[2]), int(status_array[3])))
-        else:
-            new_brightness(status_array[0])
-            solid_color(strip, Color(int(status_array[1]), int(status_array[2]), int(status_array[3])))
+        new_brightness(status_array[0])
+        if status_array[1] == 'WIPE':
+            wipe_color(strip, Color(int(status_array[2]), int(status_array[3]), int(status_array[4])))
+        elif status_array[1] == 'SOLID':
+            solid_color(strip, Color(int(status_array[2]), int(status_array[3]), int(status_array[4])))
     else:
         print("brightness:", status_array[0])
-        print("color code:", int(status_array[1]), int(status_array[2]), int(status_array[3]))
+        print("current state:", status_array[1])
+        print("color code:", int(status_array[2]), int(status_array[3]), int(status_array[4]))
 
 
-def solid_color(strip, color, wait_ms=50):
+def wipe_color(strip, color, wait_ms=50):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
         time.sleep(wait_ms/1000.0)
+
+
+def solid_color(strip, color):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color)
+        strip.show()
 
 
 def rainbow(brightness, wait_ms=20, iterations=1):
@@ -55,7 +62,9 @@ def rainbow(brightness, wait_ms=20, iterations=1):
             strip.show()
             time.sleep(wait_ms/1000.0)
     else:
+        new_brightness(brightness)
         print("Running Rainbow")
+        time.sleep(1)
 
 
 def rainbow_cycle(brightness, wait_ms=20, iterations=1):
@@ -67,7 +76,9 @@ def rainbow_cycle(brightness, wait_ms=20, iterations=1):
             strip.show()
             time.sleep(wait_ms/1000.0)
     else:
+        new_brightness(brightness)
         print("Running Rainbow Cycle")
+        time.sleep(1)
 
 
 def wheel(pos):
@@ -91,7 +102,7 @@ def rgb_twinkle(brightness, wait_s=1):
             for j in range(strip.numPixels()):
                 x += 1
 
-            z = round(x/15)                     #edit to effect color lights/meter
+            z = round(x/15)                     #edit to effect color lights/meter 1 meter is equal to 30 LEDs
             w = round(x/2)
             var1 = random.randrange(0, w)
             var2 = random.randrange(1, 4)
@@ -125,11 +136,33 @@ def rgb_twinkle(brightness, wait_s=1):
                     if y in color_array:
                         strip.setPixelColor(y, Color(0, 0, 255))
                     else:
-                        strip.setPixelColor(y, Color(255,255,255))
+                        strip.setPixelColor(y, Color(255, 255, 255))
                 strip.show()
             time.sleep(wait_s)
     else:
+        new_brightness(brightness)
         print("Runninng RGB Twinkle")
+        time.sleep(wait_s)
+
+
+def num_pattern(status_array):
+    new_brightness(status_array[0])
+    num = status_array[1]
+    color1 = status_array[2]
+    color2 = status_array[3]
+    if check == True:
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(color1[0], color1[1], color1[2]))
+            strip.show()
+        while num <= strip.numPixels():
+            while i in range(num):
+                strip.setPixelColor(i, Color(color2[0], color2[1], color2[2]))
+                strip.show()
+            num = (num + 1)
+    else:
+        print("Pattern Number:", num)
+        print("First Color:", color1)
+        print("Second Color:", color2)
 
 
 def new_brightness(brightness):
@@ -159,4 +192,3 @@ def color_changer(r, g, b):
         strip.show()
      else:
         print("Changing Color Changer")
-
