@@ -8,7 +8,7 @@ try:
             global strip
 
             # LED strip configuration
-            LED_COUNT      = 30      # Number of LED pixels.
+            LED_COUNT      = 150      # Number of LED pixels.
             LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
             #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
             LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
@@ -147,14 +147,14 @@ def rgb_twinkle(brightness, wait_s=1):
 
 def num_pattern(status_array):
     new_brightness(status_array[0])
-    num = status_array[1]
+    num = int(status_array[1])
     color1 = status_array[2]
     color2 = status_array[3]
     if check == True:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(color1[0], color1[1], color1[2]))
             strip.show()
-        while num <= strip.numPixels():
+        while num <= int(strip.numPixels()):
             while i in range(num):
                 strip.setPixelColor(i, Color(color2[0], color2[1], color2[2]))
                 strip.show()
