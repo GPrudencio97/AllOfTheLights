@@ -411,7 +411,7 @@ def run_pattern():
         set_color(status_array)
         pass
     elif color == "EMERALD":
-        status_array = [brightness, state, 80, 200, 120]
+        status_array = [brightness, state, 80, 200, 0]
         set_color(status_array)
         pass
     elif color == "MYRTLE":

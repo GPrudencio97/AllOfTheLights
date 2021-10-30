@@ -50,7 +50,7 @@ def wipe_color(strip, color, wait_ms=50):
 def solid_color(strip, color):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
-        strip.show()
+    strip.show()
 
 
 def rainbow(brightness, wait_ms=20, iterations=1):
