@@ -307,7 +307,7 @@ def run_pattern():
         set_color(status_array)
         pass
     elif color == "GREEN":
-        status_array = [brightness, state, 0, 255, 0]
+        status_array = [brightness, state, 0, 128, 0]
         set_color(status_array)
         pass
     elif color == "BLUE":
@@ -416,6 +416,50 @@ def run_pattern():
         pass
     elif color == "MYRTLE":
         status_array = [brightness, state, 33, 66, 30]
+        set_color(status_array)
+        pass
+    elif color == "ROYAL BLUE":
+        status_array = [brightness, state, 65, 105, 225]
+        set_color(status_array)
+        pass
+    elif color == "NAVY":
+        status_array = [brightness, state, 0, 0, 128]
+        set_color(status_array)
+        pass
+    elif color == "DEEP SKY BLUE":
+        status_array = [brightness, state, 0, 191, 255]
+        set_color(status_array)
+        pass
+    elif color == "ELECTRIC BLUE":
+        status_array = [brightness, state, 125, 249, 255]
+        set_color(status_array)
+        pass
+    elif color == "CYAN":
+        status_array = [brightness, state, 0, 183, 235]
+        set_color(status_array)
+        pass
+    elif color == "IMPERIAL BLUE":
+        status_array = [brightness, state, 0, 35, 149]
+        set_color(status_array)
+        pass
+    elif color == "PURPLE":
+        status_array = [brightness, state, 128, 0, 128]
+        set_color(status_array)
+        pass
+    elif color == "DARK SLATE BLUE":
+        status_array = [brightness, state, 72, 61, 139]
+        set_color(status_array)
+        pass
+    elif color == "LAVENDER":
+        status_array = [brightness, state, 181, 126, 220]
+        set_color(status_array)
+        pass
+    elif color == "AMETHYST":
+        status_array = [brightness, state, 153, 102, 204]
+        set_color(status_array)
+        pass
+    elif color == "ROYAL PURPLE":
+        status_array = [brightness, state, 120, 81, 169]
         set_color(status_array)
         pass
     else:
