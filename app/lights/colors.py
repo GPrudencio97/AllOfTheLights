@@ -28,14 +28,13 @@ except Exception:
 
 
 def set_color(status_array):
-    if check == True:
-        new_brightness(status_array[0])
+    new_brightness(status_array[0])
+    if check is True:
         if status_array[1] == 'WIPE':
             wipe_color(strip, Color(int(status_array[2]), int(status_array[3]), int(status_array[4])))
         elif status_array[1] == 'SOLID':
             solid_color(strip, Color(int(status_array[2]), int(status_array[3]), int(status_array[4])))
     else:
-        print("brightness:", status_array[0])
         print("current state:", status_array[1])
         print("color code:", int(status_array[2]), int(status_array[3]), int(status_array[4]))
 
@@ -54,29 +53,27 @@ def solid_color(strip, color):
 
 
 def rainbow(brightness, wait_ms=20, iterations=1):
-    if check == True:
-        new_brightness(brightness)
+    new_brightness(brightness)
+    if check is True:
         for j in range(256*iterations):
             for i in range(strip.numPixels()):
                 strip.setPixelColor(i, wheel((i+j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
     else:
-        new_brightness(brightness)
         print("Running Rainbow")
         time.sleep(1)
 
 
 def rainbow_cycle(brightness, wait_ms=20, iterations=1):
-    if check == True:
-        new_brightness(brightness)
+    new_brightness(brightness)
+    if check is True:
         for j in range(256*iterations):
             for i in range(strip.numPixels()):
                 strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
     else:
-        new_brightness(brightness)
         print("Running Rainbow Cycle")
         time.sleep(1)
 
@@ -93,86 +90,142 @@ def wheel(pos):
 
 
 def rgb_twinkle(brightness, wait_s=1):
-    if check == True:
-        new_brightness(brightness)
+    new_brightness(brightness)
+    z = 2                                       #Lights/meter edit this to increase or decrease the amount of twinkling lights per meter
+    r = random.randrange(0, 3)
+    y = random.randrange(1, ((30/z) + 1))
+    new_y = y
+    if check is True:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(255, 255, 255))
-            strip.show()
-            x = 0
-            for j in range(strip.numPixels()):
-                x += 1
-
-            z = round(x/15)                     #edit to effect color lights/meter 1 meter is equal to 30 LEDs
-            w = round(x/2)
-            var1 = random.randrange(0, w)
-            var2 = random.randrange(1, 4)
-            color_array = []
-            color_array.append(var1)
-
-            while len(color_array) < z:
-                color_array.append(color_array[len(color_array) - 1] + w)
-
-            if var2 == 1:
-                y = 0
-                for y in range(x):
-                    if y in color_array:
-                        strip.setPixelColor(y, Color(255, 0, 0))
-                    else:
-                        strip.setPixelColor(y, Color(255,255,255))
-                strip.show()
-
-            if var2 == 2:
-                y = 0
-                for y in range(x):
-                    if y in color_array:
-                        strip.setPixelColor(y, Color(0, 255, 0))
-                    else:
-                        strip.setPixelColor(y, Color(255,255,255))
-                strip.show()
-
-            if var2 == 3:
-                y = 0
-                for y in range(x):
-                    if y in color_array:
-                        strip.setPixelColor(y, Color(0, 0, 255))
-                    else:
-                        strip.setPixelColor(y, Color(255, 255, 255))
-                strip.show()
-            time.sleep(wait_s)
+        x = len(strip.numPixels())
+        if r == 0:
+            while new_y <= x:
+                if new_y <= x:
+                    strip.setPixelColor(y, Color(255, 0, 0))
+                    new_y = new_y + y
+                else:
+                    break
+        elif r == 1:
+            while new_y <= x:
+                if new_y <= x:
+                    strip.setPixelColor(y, Color(0, 128, 0))
+                    new_y = new_y + y
+                else:
+                    break
+        elif r == 2:
+            while new_y <= x:
+                if new_y <= x:
+                    strip.setPixelColor(y, Color(0, 0, 255))
+                    new_y = new_y + y
+                else:
+                    break
+        strip.show()
+        time.sleep(wait_s)
     else:
-        new_brightness(brightness)
         print("Runninng RGB Twinkle")
+        x = 150
+        if r == 0:
+            while new_y <= x:
+                if new_y <= x:
+                    print(f' set pixel {new_y} to Red')
+                    print("old y:", new_y)
+                    new_y = new_y + y
+                    print("new y:", new_y)
+                    print()
+                else:
+                    print("break")
+                    break
+        elif r == 1:
+            while new_y <= x:
+                if new_y <= x:
+                    print(f' set pixel {new_y} to Green')
+                    print("old y:", new_y)
+                    new_y = new_y + y
+                    print("new y:", new_y)
+                    print()
+                else:
+                    print("break")
+                    break
+        elif r == 2:
+            while new_y <= x:
+                if new_y <= x:
+                    print(f'set pixel {new_y} to Blue')
+                    print("old y:", new_y)
+                    new_y = new_y + y
+                    print("new y:", new_y)
+                    print()
+                else:
+                    print("break")
+                    break
         time.sleep(wait_s)
 
 
 def num_pattern(status_array):
     new_brightness(status_array[0])
     num = int(status_array[1])
-    color1 = status_array[2]
-    color2 = status_array[3]
-    if check == True:
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, Color(color1[0], color1[1], color1[2]))
-            strip.show()
-        while num <= int(strip.numPixels()):
-            while i in range(num):
-                strip.setPixelColor(i, Color(color2[0], color2[1], color2[2]))
-                strip.show()
-            num = (num + 1)
+    code1 = status_array[2]
+    code2 = status_array[3]
+    if check is True:
+        i = 1
+        j = 1 + num
+        new_num = num
+        while i < int(strip.numPixels()):
+            while i <= new_num:
+                strip.setPixelColor(i, Color(code1[0], code1[1], code1[2]))
+                i += 1
+            new_num = (new_num + num + num)
+            i = i + num
+            while j <= (new_num - num):
+                if j <= int(strip.numPixels()):
+                    strip.setPixelColor(i, Color(code2[0], code2[1], code2[2]))
+                    j += 1
+                else:
+                    break
+            j = j + num
+        strip.show()
     else:
         print("Pattern Number:", num)
-        print("First Color:", color1)
-        print("Second Color:", color2)
+        print("First Color:", code1)
+        print("Second Color:", code2)
+        print()
+
+        items = 150
+        i = 1
+        j = 1 + num
+        new_num = num
+        while i < items:
+            while i <= new_num:
+                print("code1:", i)
+                i += 1
+            print()
+            print("old num:", new_num)
+            new_num = (new_num + num + num)
+            print("new num:", new_num)
+            i = i + num
+            print("new i:", i)
+            print()
+
+            while j <= (new_num - num):
+                if j <= items:
+                    print("code2:", j)
+                    j += 1
+                else:
+                    break
+            j = j + num
+            print()
+            print("new j:", j)
+            print()
 
 
 def new_brightness(brightness):
-    if check == True:
+    if check is True:
         global strip
         global LED_BRIGHTNESS
 
     brightness = int(brightness)
     new_brightness = int(255 * (brightness/100))
-    if check == True:
+    if check is True:
         if new_brightness != LED_BRIGHTNESS:
             LED_BRIGHTNESS = new_brightness
             strip.setBrightness(new_brightness)
@@ -186,9 +239,58 @@ def new_brightness(brightness):
 
 
 def color_changer(r, g, b):
-     if check == True:
+    if check is True:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(r, g, b))
         strip.show()
-     else:
+    else:
         print("Changing Color Changer")
+
+
+def rainbow_theater_chase(brightness, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        for j in range(256):
+            for q in range(3):
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, wheel((i+j) % 255))
+                strip.show()
+                time.sleep(wait_ms/1000.0)
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, 0)
+    else:
+        print("Running Rainbow Theater Chase")
+        time.sleep(wait_ms/10)
+
+
+def color_theater_chase(status_array, wait_ms=50):
+    new_brightness(status_array[0])
+    code1 = status_array[1]
+    code2 = status_array[2]
+    if check is True:
+        for j in range(iterations):
+            for q in range(3):
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
+                strip.show()
+                time.sleep(wait_ms/1000.0)
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
+    else:
+        print("Running Color Theater Chase")
+        time.sleep(wait_ms/10)
+
+
+def theater_chase(brightness, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(255, 255, 255))
+            strip.show()
+            time.sleep(wait_ms/1000.0)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, 0)
+    else:
+        print("Running Theater Chase")
+        time.sleep(wait_ms/10)

@@ -118,52 +118,53 @@ def numberpattern():
         color1 = request.form.get('color1')
         color2 = request.form.get('color2')
         if color1 == "RED":
-            color1 = [255, 0, 0]
+            code1 = [255, 0, 0]
             pass
         elif color1 == "ORANGE":
-            color1 = [255, 165, 0]
+            code1 = [255, 165, 0]
             pass
         elif color1 == "YELLOW":
-            color1 = [255, 255, 0]
+            code1 = [255, 255, 0]
             pass
         elif color1 == "GREEN":
-            color1 = [0, 255, 0]
+            code1 = [0, 128, 0]
             pass
         elif color1 == "BLUE":
-            color1 = [0, 0, 255]
+            code1 = [0, 0, 255]
             pass
         elif color1 == "INDIGO":
-            color1 = [75, 0, 130]
+            code1 = [75, 0, 130]
             pass
         elif color1 == "VIOLET":
-            color1 = [238, 130, 238]
+            code1 = [238, 130, 238]
             pass
 
         if color2 == "RED":
-            color2 = [255, 0, 0]
+            code2 = [255, 0, 0]
             pass
         elif color2 == "ORANGE":
-            color2 = [255, 165, 0]
+            code2 = [255, 165, 0]
             pass
         elif color2 == "YELLOW":
-            color2 = [255, 255, 0]
+            code2 = [255, 255, 0]
             pass
         elif color2 == "GREEN":
-            color2 = [0, 255, 0]
+            code2 = [0, 128, 0]
             pass
         elif color2 == "BLUE":
-            color2 = [0, 0, 255]
+            code2 = [0, 0, 255]
             pass
         elif color2 == "INDIGO":
-            color2 = [75, 0, 130]
+            code2 = [75, 0, 130]
             pass
         elif color2 == "VIOLET":
-            color2 = [238, 130, 238]
+            code2 = [238, 130, 238]
             pass
 
-        status_array = [brightness, pattern, color1, color2]
+        status_array = [brightness, pattern, code1, code2]
         num_pattern(status_array)
-        return render_template('numberpattern.html', color=color, brightness=brightness)
+        return render_template('numberpattern.html', color=color, brightness=brightness, pattern=pattern, color1=color1,
+                               color2=color2)
     elif request.method == 'PATCH':
         brightness = request.get_json(force=True)
         return make_response("OK", 200)
@@ -232,7 +233,6 @@ def greens():
     global brightness
     global state
 
-
     event_object.set()
 
     if request.method == 'POST':
@@ -254,29 +254,29 @@ def greens():
     else:
         return render_template('greens.html', form=form, color=color, brightness=brightness, state=state)
 
-    
-# def run_pattern():
-#     global color
-#     global brightness
-#
-#     while color == 'NULL':
-#         time.sleep(.00001)
-#
-#     print(f'{color} running')
-#
-#     color_func = color.lower().replace(" ", "_")
-#
-#     # find function called 'color_func' in the locals() table and if it exists, call it
-#     if locals()[color_func]:
-#         locals()[color_func]()
-#     else:
-#         print(f'Invalid color: {color}')
-#
-#     print(f'{color} waiting')
-#     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE":
-#         event_object.wait()
-#
-#     return Response(run_pattern())
+
+@app.route('/colorchase', methods=['GET', 'POST', 'PATCH'])
+def color_chase():
+    global color
+    global brightness
+    global color_chase_1
+    global color_chase_2
+
+    event_object.set()
+    color = 'COLOR CHASE'
+
+    if request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+    elif request.method == 'POST':
+        color_chase_1 = request.form.get('color1')
+        color_chase_2 = request.form.get('color2')
+        return render_template('colorchase.html', color=color, brightness=brightness, color1=color_chase_1,
+                               color2=color_chase_2)
+    else:
+        color_chase_1 = "NONE"
+        color_chase_2 = "NONE"
+        return render_template('colorchase.html', color=color, brightness=brightness)
 
 
 def run_pattern():
@@ -294,6 +294,12 @@ def run_pattern():
         rainbow_cycle(brightness)
     elif color == "RGB TWINKLE":
         rgb_twinkle(brightness)
+    elif color == "RAINBOW THEATER CHASE":
+        rainbow_theater_chase(brightness)
+    elif color == "THEATER CHASE":
+        theater_chase(brightness)
+    elif color == "COLOR CHASE":
+        get_chase_colors(brightness)
     elif color == "RED":
         status_array = [brightness, state, 255, 0, 0]
         set_color(status_array)
@@ -466,10 +472,70 @@ def run_pattern():
         print(f'Invalid color: {color}')
 
     print(f'{color} waiting')
-    if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE":
+    if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE" and color != "RAINBOW THEATER CHASE"\
+            and color != "THEATER CHASE" and color != "COLOR CHASE":
         event_object.wait()
 
     return Response(run_pattern())
+
+
+def get_chase_colors(brightness):
+    global color_chase_1
+    global color_chase_2
+
+    color1 = color_chase_1
+    color2 = color_chase_2
+
+    if color1 == "RED":
+        code1 = [255, 0, 0]
+        pass
+    elif color1 == "ORANGE":
+        code1 = [255, 165, 0]
+        pass
+    elif color1 == "YELLOW":
+        code1 = [255, 255, 0]
+        pass
+    elif color1 == "GREEN":
+        code1 = [0, 128, 0]
+        pass
+    elif color1 == "BLUE":
+        code1 = [0, 0, 255]
+        pass
+    elif color1 == "INDIGO":
+        code1 = [75, 0, 130]
+        pass
+    elif color1 == "VIOLET":
+        code1 = [238, 130, 238]
+        pass
+    else:
+        code1 = [0, 0, 0]
+
+    if color2 == "RED":
+        code2 = [255, 0, 0]
+        pass
+    elif color2 == "ORANGE":
+        code2 = [255, 165, 0]
+        pass
+    elif color2 == "YELLOW":
+        code2 = [255, 255, 0]
+        pass
+    elif color2 == "GREEN":
+        code2 = [0, 128, 0]
+        pass
+    elif color2 == "BLUE":
+        code2 = [0, 0, 255]
+        pass
+    elif color2 == "INDIGO":
+        code2 = [75, 0, 130]
+        pass
+    elif color2 == "VIOLET":
+        code2 = [238, 130, 238]
+        pass
+    else:
+        code2 = [0, 0, 0]
+
+    status_array = [brightness, code1, code2]
+    color_theater_chase(status_array)
 
 
 def auto_on():
