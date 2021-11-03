@@ -127,6 +127,115 @@ div.distance{
         color: white;
     }
 
+    .lime{
+        background-color: rgb(0, 255, 0);
+        color: white;
+    }
+
+    .forestgreen{
+        background-color: rgb(34, 139, 34);
+        color: white;
+    }
+
+    .darkgreen{
+        background-color: rgb(0, 100, 0);
+        color: white;
+    }
+
+    .caribbeangreen{
+        background-color: rgb(0, 204, 153);
+        color: white;
+    }
+
+    .jade{
+        background-color: rgb(0, 168, 107);
+        color: white;
+    }
+
+    .aquamarine{
+        background-color: rgb(127, 255, 212);
+        color: white;
+    }
+
+    .turquoisegreen{
+        background-color: rgb(160, 214, 180);
+        color: white;
+    }
+
+    .neongreen{
+        background-color: rgb(57, 255, 20);
+        color: white;
+    }
+
+    .ufogreen{
+        background-color: rgb(60, 208, 112);
+        color: white;
+    }
+
+    .emerald{
+        background-color: rgb(80, 200, 0);
+        color: white;
+    }
+
+    .myrtle{
+        background-color: rgb(33, 66, 30);
+        color: white;
+    }
+
+    .royalblue{
+        background-color: rgb(65, 105, 225);
+        color: white;
+    }
+
+    .navy{
+        background-color: rgb(0, 0, 128);
+        color: white;
+    }
+
+    .deepskyblue{
+        background-color: rgb(0, 191, 255);
+        color: white;
+    }
+
+    .electricblue{
+        background-color: rgb(125, 249, 255);
+        color: black;
+    }
+
+    .cyan{
+        background-color: rgb(0, 183, 235);
+        color: white;
+    }
+
+    .imperialblue{
+        background-color: rgb(0, 35, 149);
+        color: white;
+    }
+
+    .purple{
+        background-color: rgb(128, 0, 128);
+        color: white;
+    }
+
+    .darkslateblue{
+        background-color: rgb(72, 61, 139);
+        color: white;
+    }
+
+    .lavender{
+        background-color: rgb(181, 126, 220);
+        color: white;
+    }
+
+    .amethyst{
+        background-color: rgb(153, 102, 204);
+        color: white;
+    }
+
+    .royalpurple{
+        background-color: rgb(120, 81, 169);
+        color: white;
+    }
 
 input[type=text]{
     padding: 5px 10px;

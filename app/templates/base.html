@@ -20,7 +20,7 @@
                 <div class="container">
                     <a class="brand" href="/index"><i class="icon-star-empty"></i> All Of The Lights </a>
                     <ul class="nav pull-right">
-                        <form id="test" method="POST" action="?" style="padding-top: 5px">
+                        <form method="POST" action="?" style="padding-top: 5px">
                             {% if color == 'OFF' or color == '' %}
                                 <input type="submit" name="submit_button" value="ON" class="white"/>
                             {% else %}
@@ -45,11 +45,14 @@
                             <ul class="widget widget-menu unstyled">
                                 <li class="active"><a href="/index"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li>
                                 <li class="active"><a href="/control"><i class="menu-icon icon-arrow-right"></i>Main Controller</a></li>
-                                <li><a href="/colorpicker"><i class="menu-icon icon-arrow-right"></i>Color Picker</a></li>
-                                <li><a href="/numberpattern"><i class="menu-icon icon-arrow-right"></i>Numbered Patterns</a></li>
-                                <li><a href="/reds"><i class="menu-icon icon-arrow-right"></i>Reds</a></li>
-                                <li><a href="/greens"><i class="menu-icon icon-arrow-right"></i>Greens</a></li>
-                                <li><a href="/blues"><i class="menu-icon icon-arrow-right"></i>Blues</a></li>
+                                <li class="active"><a href="/reds"><i class="menu-icon icon-arrow-right"></i>Reds</a></li>
+                                <li class="active"><a href="/greens"><i class="menu-icon icon-arrow-right"></i>Greens</a></li>
+                                <li class="active"><a href="/blues"><i class="menu-icon icon-arrow-right"></i>Blues</a></li>
+                            </ul>
+                            <ul class="widget widget-menu unstyled">
+                                <li class="active"><a href="/colorpicker"><i class="menu-icon icon-arrow-right"></i>Rainbow Color Picker</a></li>
+                                <li class="active"><a href="/numberpattern"><i class="menu-icon icon-arrow-right"></i>Numbered Patterns</a></li>
+                                <li class="active"><a href="/colorchase"><i class="menu-icon icon-arrow-right"></i>Color Theater Chase</a></li>
                             </ul>
                         </div>
                         <!--/.sidebar-->
@@ -63,7 +66,7 @@
         <!--/.wrapper-->
         <div class="footer">
             <div class="container">
-                <b class="copyright">&copy; 2021 All Of The Lights </b>Test
+                <b class="copyright">&copy; 2021 All Of The Lights </b>I like Big Booty Bitches
                 <div class="slidecontainer pull-right">
                     <b>Brightness: </b><input type="range" min="1" max="100" value={{ brightness or 100 }} class="slider" id="myRange">
                     <p>Value: <span id="value"></span>%</p>
