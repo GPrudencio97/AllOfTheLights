@@ -98,25 +98,25 @@ def rgb_twinkle(brightness, wait_s=1):
     if check is True:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(255, 255, 255))
-        x = len(strip.numPixels())
+        x = strip.numPixels()
         if r == 0:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(255, 0, 0))
+                    strip.setPixelColor(new_y, Color(255, 0, 0))
                     new_y = new_y + y
                 else:
                     break
         elif r == 1:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(0, 128, 0))
+                    strip.setPixelColor(new_y, Color(0, 128, 0))
                     new_y = new_y + y
                 else:
                     break
         elif r == 2:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(0, 0, 255))
+                    strip.setPixelColor(new_y, Color(0, 0, 255))
                     new_y = new_y + y
                 else:
                     break
@@ -178,7 +178,7 @@ def num_pattern(status_array):
             i = i + num
             while j <= (new_num - num):
                 if j <= int(strip.numPixels()):
-                    strip.setPixelColor(i, Color(code2[0], code2[1], code2[2]))
+                    strip.setPixelColor(j, Color(code2[0], code2[1], code2[2]))
                     j += 1
                 else:
                     break
@@ -268,14 +268,13 @@ def color_theater_chase(status_array, wait_ms=50):
     code1 = status_array[1]
     code2 = status_array[2]
     if check is True:
-        for j in range(iterations):
-            for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
-                strip.show()
-                time.sleep(wait_ms/1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
+            strip.show()
+            time.sleep(wait_ms/100.0)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
     else:
         print("Running Color Theater Chase")
         time.sleep(wait_ms/10)

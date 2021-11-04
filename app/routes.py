@@ -113,6 +113,8 @@ def numberpattern():
 
     color = 'NUMBER PATTERN'
 
+    event_object.set()
+
     if request.method == 'POST':
         pattern = request.form.get('pattern')
         color1 = request.form.get('color1')
@@ -467,6 +469,9 @@ def run_pattern():
     elif color == "ROYAL PURPLE":
         status_array = [brightness, state, 120, 81, 169]
         set_color(status_array)
+        pass
+    elif color == "NUMBER PATTERN":
+        new_brightness(brightness)
         pass
     else:
         print(f'Invalid color: {color}')
