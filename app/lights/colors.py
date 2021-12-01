@@ -247,7 +247,7 @@ def color_changer(r, g, b):
         print("Changing Color Changer")
 
 
-def rainbow_theater_chase(brightness, wait_ms=50):
+def rainbow_theater_chase(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
         for j in range(256):
@@ -255,41 +255,155 @@ def rainbow_theater_chase(brightness, wait_ms=50):
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, wheel((i+j) % 255))
                 strip.show()
-                time.sleep(wait_ms/1000.0)
+                if speed == 'SLOW':
+                    time.sleep(wait_ms/100.0)
+                elif speed == 'MEDIUM-SLOW':
+                    time.sleep(wait_ms/200.0)
+                elif speed == 'MEDIUM':
+                    time.sleep(wait_ms/80)
+                elif speed == 'MEDIUM-FAST':
+                    time.sleep(wait_ms/500.0)
+                else:
+                    time.sleep(wait_ms/1000.0)
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, 0)
     else:
         print("Running Rainbow Theater Chase")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def rainbow_cycle_theater_chase(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        for j in range(256):
+            for q in range(3):
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
+                strip.show()
+                if speed == 'SLOW':
+                    time.sleep(wait_ms / 100.0)
+                elif speed == 'MEDIUM-SLOW':
+                    time.sleep(wait_ms / 200.0)
+                elif speed == 'MEDIUM':
+                    time.sleep(wait_ms / 80)
+                elif speed == 'MEDIUM-FAST':
+                    time.sleep(wait_ms / 500.0)
+                else:
+                    time.sleep(wait_ms / 1000.0)
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, 0)
+    else:
+        print("Running Rainbow Cycle Theater Chase")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
 
 
 def color_theater_chase(status_array, wait_ms=50):
     new_brightness(status_array[0])
-    code1 = status_array[1]
-    code2 = status_array[2]
+    speed = status_array[1]
+    code1 = status_array[2]
+    code2 = status_array[3]
     if check is True:
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
             strip.show()
-            time.sleep(wait_ms/100.0)
+            if speed == 'SLOW':
+                time.sleep(wait_ms / 100.0)
+            elif speed == 'MEDIUM-SLOW':
+                time.sleep(wait_ms / 200.0)
+            elif speed == 'MEDIUM':
+                time.sleep(wait_ms / 80)
+            elif speed == 'MEDIUM-FAST':
+                time.sleep(wait_ms / 500.0)
+            else:
+                time.sleep(wait_ms / 1000.0)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
     else:
         print("Running Color Theater Chase")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
 
 
-def theater_chase(brightness, wait_ms=50):
+def theater_chase(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 100.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 200.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 80)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 500.0)
+        else:
+            sleep = (wait_ms / 1000.0)
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(255, 255, 255))
             strip.show()
-            time.sleep(wait_ms/1000.0)
+            time.sleep(sleep)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
     else:
         print("Running Theater Chase")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def rgb_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 100.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 200.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 80)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 500.0)
+        else:
+            sleep = (wait_ms / 1000.0)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(255, 0, 0))
+        strip.show()
+        time.sleep(sleep)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(0, 0, 255))
+        strip.show()
+        time.sleep(sleep)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(0, 128, 0))
+        strip.show()
+        time.sleep(sleep)
+
+    else:
+        print("Running rgb_cycle")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def random_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 100.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 200.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 80)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 500.0)
+        else:
+            sleep = (wait_ms / 1000.0)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256)))
+        strip.show()
+        time.sleep(sleep)
+
+    else:
+        print("Running random_cycle")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)

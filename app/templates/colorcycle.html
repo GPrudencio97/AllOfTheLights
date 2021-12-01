@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form id="colors" method="POST" action="/colorcycle">
+    <div class="span9">
+        <div class="content">
+            <div class="btn-controls">
+                <div class="btn-box-row row-fluid">
+                    <div class="distance">
+                        <h2>Color Cycle:</h2>
+                        <input type="submit" name="submit_button" value="COLOR CYCLE" class="btn-box rgb_twinkle big span4"/>
+                        <input type="submit" name="submit_button" value="RANDOM CYCLE" class="btn-box white big span4"/>
+                    </div>
+                </div>
+            </div>
+            <!--/.module-->
+        </div>
+        <!--/.content-->
+    </div>
+</form>
+<ul class="pull-right">
+    <form method="POST" action="/colorcycle">
+        <label for="speed">Choose a Speed</label>
+        <select name="speed" id="speed">
+            {% if speed == 'SLOW' %}
+            <option value="SLOW" selected>SLOW</option>
+            <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+            <option value="FAST">FAST</option>
+            {% elif speed == 'MEDIUM-SLOW' %}
+            <option value="SLOW">SLOW</option>
+            <option value="MEDIUM-SLOW" selected>MEDIUM-SLOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+            <option value="FAST">FAST</option>
+            {% elif speed == 'MEDIUM' %}
+            <option value="SLOW">SLOW</option>
+            <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+            <option value="MEDIUM" selected>MEDIUM</option>
+            <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+            <option value="FAST">FAST</option>
+            {% elif speed == 'MEDIUM-FAST' %}
+            <option value="SLOW">SLOW</option>
+            <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="MEDIUM-FAST" selected>MEDIUM-FAST</option>
+            <option value="FAST">FAST</option>
+            {% else %}
+            <option value="SLOW">SLOW</option>
+            <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+            <option value="FAST" selected>FAST</option>
+            {% endif %}
+        </select>
+        <div class="pull-right" style="padding: 1px; padding-left: 5px;">
+            <input type="submit" name="speed_button" value="Submit">
+        </div>
+    </form>
+</ul>
+<!--/.span9-->
+{% endblock %}

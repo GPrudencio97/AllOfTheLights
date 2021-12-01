@@ -1,4 +1,5 @@
-import logging, time
+import logging
+import time
 from app import app
 from flask import render_template, request, Response, make_response
 from flask_wtf import form
@@ -10,7 +11,13 @@ event_object = threading.Event()
 color = 'OFF'
 brightness = 100
 z = False
-state = 'WIPE'
+state = 'SOLID'
+speed = 'MEDIUM'
+color1 = 'NONE'
+color2 = 'NONE'
+color3 = 'NONE'
+color4 = 'NONE'
+pattern = 1
 
 
 @app.route('/', methods=['GET', 'POST', 'PATCH'])
@@ -20,7 +27,7 @@ def index():
     global color
     global brightness
 
-    if z == True:
+    if z is True:
         if request.method == 'POST':
             event_object.set()
             print("Thread is already running")
@@ -49,6 +56,7 @@ def current():
     global color
     global brightness
     global state
+    global speed
 
     event_object.set()
 
@@ -57,12 +65,14 @@ def current():
         if request.form.get('submit_button'):
             color = request.form.get('submit_button')
             print(f'Pressed {color} button')
-
         elif request.form.get('state_button'):
-            state = request.form.get('state_button')
+            state = request.form.get('state')
             print(f'The current state is {state}')
+        elif request.form.get('speed_button'):
+            speed = request.form.get('speed')
+            print(f'The current speed is now {speed}')
 
-        return render_template('control.html', form=form, color=color, brightness=brightness, state=state)
+        return render_template('control.html', form=form, color=color, brightness=brightness, state=state, speed=speed)
 
     elif request.method == 'PATCH':
         brightness = request.get_json(force=True)
@@ -110,6 +120,9 @@ def color_picker():
 def numberpattern():
     global color
     global brightness
+    global color1
+    global color2
+    global pattern
 
     color = 'NUMBER PATTERN'
 
@@ -119,52 +132,6 @@ def numberpattern():
         pattern = request.form.get('pattern')
         color1 = request.form.get('color1')
         color2 = request.form.get('color2')
-        if color1 == "RED":
-            code1 = [255, 0, 0]
-            pass
-        elif color1 == "ORANGE":
-            code1 = [255, 165, 0]
-            pass
-        elif color1 == "YELLOW":
-            code1 = [255, 255, 0]
-            pass
-        elif color1 == "GREEN":
-            code1 = [0, 128, 0]
-            pass
-        elif color1 == "BLUE":
-            code1 = [0, 0, 255]
-            pass
-        elif color1 == "INDIGO":
-            code1 = [75, 0, 130]
-            pass
-        elif color1 == "VIOLET":
-            code1 = [238, 130, 238]
-            pass
-
-        if color2 == "RED":
-            code2 = [255, 0, 0]
-            pass
-        elif color2 == "ORANGE":
-            code2 = [255, 165, 0]
-            pass
-        elif color2 == "YELLOW":
-            code2 = [255, 255, 0]
-            pass
-        elif color2 == "GREEN":
-            code2 = [0, 128, 0]
-            pass
-        elif color2 == "BLUE":
-            code2 = [0, 0, 255]
-            pass
-        elif color2 == "INDIGO":
-            code2 = [75, 0, 130]
-            pass
-        elif color2 == "VIOLET":
-            code2 = [238, 130, 238]
-            pass
-
-        status_array = [brightness, pattern, code1, code2]
-        num_pattern(status_array)
         return render_template('numberpattern.html', color=color, brightness=brightness, pattern=pattern, color1=color1,
                                color2=color2)
     elif request.method == 'PATCH':
@@ -189,7 +156,7 @@ def reds():
             print(f'Pressed {color} button')
 
         elif request.form.get('state_button'):
-            state = request.form.get('state_button')
+            state = request.form.get('state')
             print(f'The current state is {state}')
 
         return render_template('reds.html', form=form, color=color, brightness=brightness, state=state)
@@ -216,7 +183,7 @@ def blues():
             print(f'Pressed {color} button')
 
         elif request.form.get('state_button'):
-            state = request.form.get('state_button')
+            state = request.form.get('state')
             print(f'The current state is {state}')
 
         return render_template('blues.html', form=form, color=color, brightness=brightness, state=state)
@@ -244,7 +211,7 @@ def greens():
             print(f'Pressed {color} button')
 
         elif request.form.get('state_button'):
-            state = request.form.get('state_button')
+            state = request.form.get('state')
             print(f'The current state is {state}')
 
         return render_template('greens.html', form=form, color=color, brightness=brightness, state=state)
@@ -261,8 +228,9 @@ def greens():
 def color_chase():
     global color
     global brightness
-    global color_chase_1
-    global color_chase_2
+    global speed
+    global color3
+    global color4
 
     event_object.set()
     color = 'COLOR CHASE'
@@ -271,20 +239,30 @@ def color_chase():
         brightness = request.get_json(force=True)
         return make_response("OK", 200)
     elif request.method == 'POST':
-        color_chase_1 = request.form.get('color1')
-        color_chase_2 = request.form.get('color2')
-        return render_template('colorchase.html', color=color, brightness=brightness, color1=color_chase_1,
-                               color2=color_chase_2)
+        color3 = request.form.get('color1')
+        color4 = request.form.get('color2')
+        speed = request.form.get('speed')
+        return render_template('colorchase.html', color=color, brightness=brightness, speed=speed,
+                               color3=color3, color4=color4)
     else:
-        color_chase_1 = "NONE"
-        color_chase_2 = "NONE"
+        color3 = "NONE"
+        color4 = "NONE"
         return render_template('colorchase.html', color=color, brightness=brightness)
 
+
+@app.route('/colorcycle', methods=['GET', 'POST'])
+def colorcycle():
+    global color
+    global brightness
+    global speed
+
+    return render_template('colorcycle.html', color=color, brightness=brightness, speed=speed)
 
 def run_pattern():
     global color
     global brightness
     global state
+    global speed
 
     event_object.clear()
 
@@ -297,11 +275,15 @@ def run_pattern():
     elif color == "RGB TWINKLE":
         rgb_twinkle(brightness)
     elif color == "RAINBOW THEATER CHASE":
-        rainbow_theater_chase(brightness)
+        rainbow_theater_chase(brightness, speed)
+    elif color == "RAINBOW CYCLE THEATER CHASE":
+        rainbow_cycle_theater_chase(brightness, speed)
     elif color == "THEATER CHASE":
-        theater_chase(brightness)
+        theater_chase(brightness, speed)
     elif color == "COLOR CHASE":
-        get_chase_colors(brightness)
+        get_chase_colors()
+    elif color == "NUMBER PATTERN":
+        get_pattern_colors()
     elif color == "RED":
         status_array = [brightness, state, 255, 0, 0]
         set_color(status_array)
@@ -484,12 +466,75 @@ def run_pattern():
     return Response(run_pattern())
 
 
-def get_chase_colors(brightness):
-    global color_chase_1
-    global color_chase_2
+def get_chase_colors():
+    global brightness
+    global speed
+    global color3
+    global color4
 
-    color1 = color_chase_1
-    color2 = color_chase_2
+    color3 = color3
+    color4 = color4
+
+    if color3 == "RED":
+        code1 = [255, 0, 0]
+        pass
+    elif color3 == "ORANGE":
+        code1 = [255, 165, 0]
+        pass
+    elif color3 == "YELLOW":
+        code1 = [255, 255, 0]
+        pass
+    elif color3 == "GREEN":
+        code1 = [0, 128, 0]
+        pass
+    elif color3 == "BLUE":
+        code1 = [0, 0, 255]
+        pass
+    elif color3 == "INDIGO":
+        code1 = [75, 0, 130]
+        pass
+    elif color3 == "VIOLET":
+        code1 = [238, 130, 238]
+        pass
+    else:
+        code1 = [0, 0, 0]
+
+    if color4 == "RED":
+        code2 = [255, 0, 0]
+        pass
+    elif color4 == "ORANGE":
+        code2 = [255, 165, 0]
+        pass
+    elif color4 == "YELLOW":
+        code2 = [255, 255, 0]
+        pass
+    elif color4 == "GREEN":
+        code2 = [0, 128, 0]
+        pass
+    elif color4 == "BLUE":
+        code2 = [0, 0, 255]
+        pass
+    elif color4 == "INDIGO":
+        code2 = [75, 0, 130]
+        pass
+    elif color4 == "VIOLET":
+        code2 = [238, 130, 238]
+        pass
+    else:
+        code2 = [0, 0, 0]
+
+    status_array = [brightness, speed, code1, code2]
+    color_theater_chase(status_array)
+
+
+def get_pattern_colors():
+    global color1
+    global color2
+    global pattern
+    global brightness
+
+    color1 = color1
+    color2 = color2
 
     if color1 == "RED":
         code1 = [255, 0, 0]
@@ -539,8 +584,8 @@ def get_chase_colors(brightness):
     else:
         code2 = [0, 0, 0]
 
-    status_array = [brightness, code1, code2]
-    color_theater_chase(status_array)
+    status_array = [brightness, pattern, code1, code2]
+    num_pattern(status_array)
 
 
 def auto_on():
@@ -572,6 +617,3 @@ fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 h = logging.StreamHandler()
 h.setFormatter(fmt)
 log.addHandler(h)
-
-
-

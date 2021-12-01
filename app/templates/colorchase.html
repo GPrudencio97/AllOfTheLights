@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="pattern-container">
-      <h2>Note: Page In Testing</h2>
+      <h2>Color Theater Chase</h2>
       <form method="POST" action="/colorchase">
           <div>
               <label for="color1">Choose the First Color</label>
@@ -144,6 +144,50 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
+                  {% endif %}
+              </select>
+          </div>
+          <br>
+          <div>
+              <label for="speed">Choose a Speed</label>
+              <select name="speed" id="speed">
+                  {% if speed == 'SLOW' %}
+                  <option value="SLOW" selected>SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM-SLOW' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW" selected>MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM" selected>MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM-FAST' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST" selected>MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'FAST' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST" selected>FAST</option>
+                  {% else %}
+                  <option value="none" selected disabled hidden>Select an Option</option>
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
                   {% endif %}
               </select>
           </div>

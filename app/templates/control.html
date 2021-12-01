@@ -22,7 +22,8 @@
                         <input type="submit" name="submit_button" value="RAINBOW" class="btn-box rainbow big span4"/>
                         <input type="submit" name="submit_button" value="RAINBOW CYCLE" class="btn-box rainbow_cycle big span4"/>
                         <input type="submit" name="submit_button" value="RGB TWINKLE" class="btn-box rgb_twinkle big span4"/>
-                        <input type="submit" name="submit_button" value="RAINBOW THEATER CHASE" class="btn-box rainbow_cycle big span4"/>
+                        <input type="submit" name="submit_button" value="RAINBOW THEATER CHASE" class="btn-box rainbow_chase big span4"/>
+                        <input type="submit" name="submit_button" value="RAINBOW CYCLE THEATER CHASE" class="btn-box rainbow_cycle_chase big span4"/>
                         <input type="submit" name="submit_button" value="THEATER CHASE" class="btn-box white big span4"/>
                     </div>
                 </div>
@@ -32,16 +33,61 @@
         <!--/.content-->
     </div>
 </form>
-<ul class="nav pull-right">
+<ul class="pull-right">
     <form method="POST" action="/control">
-        {% if state == 'WIPE' %}
-        <input type="submit" name="state_button" value="SOLID" class="white"/>
+        {% if color == 'RAINBOW THEATER CHASE' or color == 'RAINBOW CYCLE THEATER CHASE' or color == 'THEATER CHASE' %}
+            <label for="speed">Choose a Speed</label>
+            <select name="speed" id="speed">
+                {% if speed == 'SLOW' %}
+                <option value="SLOW" selected>SLOW</option>
+                <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                <option value="FAST">FAST</option>
+                {% elif speed == 'MEDIUM-SLOW' %}
+                <option value="SLOW">SLOW</option>
+                <option value="MEDIUM-SLOW" selected>MEDIUM-SLOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                <option value="FAST">FAST</option>
+                {% elif speed == 'MEDIUM' %}
+                <option value="SLOW">SLOW</option>
+                <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                <option value="MEDIUM" selected>MEDIUM</option>
+                <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                <option value="FAST">FAST</option>
+                {% elif speed == 'MEDIUM-FAST' %}
+                <option value="SLOW">SLOW</option>
+                <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="MEDIUM-FAST" selected>MEDIUM-FAST</option>
+                <option value="FAST">FAST</option>
+                {% else %}
+                <option value="SLOW">SLOW</option>
+                <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                <option value="FAST" selected>FAST</option>
+                {% endif %}
+            </select>
+            <div class="pull-right" style="padding: 1px; padding-left: 5px;">
+                <input type="submit" name="speed_button" value="Submit">
+            </div>
         {% else %}
-        <input type="submit" name="state_button" value="WIPE" class="white"/>
+            <label for="state">Choose a State</label>
+            <select name="state" id="state">
+                {% if state == 'WIPE' %}
+                <option value="WIPE" selected>WIPE</option>
+                <option value="SOLID">SOLID</option>
+                {% else %}
+                <option value="WIPE">WIPE</option>
+                <option value="SOLID" selected>SOLID</option>
+                {% endif %}
+            </select>
+            <div class="pull-right" style="padding: 1px; padding-left: 5px;">
+                <input type="submit" name="state_button" value="Submit">
+            </div>
         {% endif %}
-        <div>
-            <h6>Current Color State: {{ state }}</h6>
-        </div>
     </form>
 </ul>
 <!--/.span9-->
