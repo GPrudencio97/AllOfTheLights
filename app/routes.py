@@ -256,6 +256,19 @@ def colorcycle():
     global brightness
     global speed
 
+    event_object.set()
+
+    if request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+    elif request.method == 'POST':
+        if request.form.get('submit_button'):
+            color = request.form.get('submit_button')
+            print(f'Pressed {color} button')
+        elif request.form.get('speed_button'):
+            speed = request.form.get('speed')
+            print(f'The current speed is now {speed}')
+
     return render_template('colorcycle.html', color=color, brightness=brightness, speed=speed)
 
 def run_pattern():
@@ -284,6 +297,10 @@ def run_pattern():
         get_chase_colors()
     elif color == "NUMBER PATTERN":
         get_pattern_colors()
+    elif color == "COLOR CYCLE":
+        color_cycle()
+    elif color == "RANDOM CYCLE":
+        random_cycle()
     elif color == "RED":
         status_array = [brightness, state, 255, 0, 0]
         set_color(status_array)
@@ -460,7 +477,7 @@ def run_pattern():
 
     print(f'{color} waiting')
     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE" and color != "RAINBOW THEATER CHASE"\
-            and color != "THEATER CHASE" and color != "COLOR CHASE":
+            and color != "THEATER CHASE" and color != "COLOR CHASE" and color != "COLOR CYCLE" and color != "RANDOM CYCLE":
         event_object.wait()
 
     return Response(run_pattern())
