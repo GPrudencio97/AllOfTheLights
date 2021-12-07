@@ -345,7 +345,7 @@ def theater_chase(brightness, speed, wait_ms=50):
         time.sleep(wait_ms/10)
 
 
-def rgb_cycle(brightness, speed, wait_ms=50):
+def color_cycle(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
         if speed == 'SLOW':
