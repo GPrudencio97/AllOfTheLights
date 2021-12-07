@@ -298,9 +298,9 @@ def run_pattern():
     elif color == "NUMBER PATTERN":
         get_pattern_colors()
     elif color == "COLOR CYCLE":
-        color_cycle()
+        color_cycle(brightness, speed)
     elif color == "RANDOM CYCLE":
-        random_cycle()
+        random_cycle(brightness, speed)
     elif color == "RED":
         status_array = [brightness, state, 255, 0, 0]
         set_color(status_array)
