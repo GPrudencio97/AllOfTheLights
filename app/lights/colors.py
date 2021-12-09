@@ -1,22 +1,32 @@
-import time, random, io
-from rpi_ws281x import *
+import time
+import random
+import io
 
-global strip
+try:
+    with io.open('/sys/firmware/devicetree/base/model', 'r') as m:
+        if 'raspberry pi' in m.read().lower():
+            from rpi_ws281x import *
 
-# LED strip configuration
-LED_COUNT      = 150      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
-#LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
-LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
-LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
-LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+            global strip
 
-strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS,
+            # LED strip configuration
+            LED_COUNT      = 150      # Number of LED pixels.
+            LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
+            #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+            LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+            LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
+            LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
+            LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+            LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+
+            strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS,
                                       LED_CHANNEL)
-check = True
-strip.begin()
+            check = True
+            strip.begin()
+
+except Exception:
+    check = False
+    pass
 
 
 def set_color(status_array):
@@ -349,15 +359,15 @@ def color_cycle(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
         if speed == 'SLOW':
-            sleep = (wait_ms / 100.0)
+            sleep = (wait_ms / 10.0)
         elif speed == 'MEDIUM-SLOW':
-            sleep = (wait_ms / 200.0)
+            sleep = (wait_ms / 25.0)
         elif speed == 'MEDIUM':
-            sleep = (wait_ms / 80)
+            sleep = (wait_ms / 50.0)
         elif speed == 'MEDIUM-FAST':
-            sleep = (wait_ms / 500.0)
+            sleep = (wait_ms / 75.0)
         else:
-            sleep = (wait_ms / 1000.0)
+            sleep = (wait_ms / 100.0)
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(255, 0, 0))
         strip.show()
@@ -381,15 +391,15 @@ def random_cycle(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
         if speed == 'SLOW':
-            sleep = (wait_ms / 100.0)
+            sleep = (wait_ms / 10.0)
         elif speed == 'MEDIUM-SLOW':
-            sleep = (wait_ms / 200.0)
+            sleep = (wait_ms / 25.0)
         elif speed == 'MEDIUM':
-            sleep = (wait_ms / 80)
+            sleep = (wait_ms / 50.0)
         elif speed == 'MEDIUM-FAST':
-            sleep = (wait_ms / 500.0)
+            sleep = (wait_ms / 75.0)
         else:
-            sleep = (wait_ms / 1000.0)
+            sleep = (wait_ms / 100.0)
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256)))
         strip.show()
@@ -399,3 +409,42 @@ def random_cycle(brightness, speed, wait_ms=50):
         print("Running random_cycle")
         print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
+
+
+def random_color_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 10.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 25.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 50.0)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 75.0)
+        else:
+            sleep = (wait_ms / 100.0)
+        r = random.randrange(0, 256)
+        g = random.randrange(0, 256)
+        b = random.randrange(0, 256)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(r, g, b))
+        strip.show()
+        time.sleep(sleep)
+
+    else:
+        print("Running random_cycle")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms / 10)
+
+
+def color_choice(color_code, brightness, state):
+    new_brightness(brightness)
+    if check is True:
+        if state == 'WIPE':
+            wipe_color(strip, Color(int(color_code)))
+        elif state == 'SOLID':
+            solid_color(strip, Color(int(color_code)))
+    else:
+        print("current state:", state)
+        print("color code:", int(color_code))

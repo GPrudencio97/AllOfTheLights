@@ -1,7 +1,7 @@
 import logging
 import time
 from app import app
-from flask import render_template, request, Response, make_response
+from flask import render_template, redirect, request, Response, make_response
 from flask_wtf import form
 from app.lights.colors import *
 import threading
@@ -132,6 +132,12 @@ def numberpattern():
         pattern = request.form.get('pattern')
         color1 = request.form.get('color1')
         color2 = request.form.get('color2')
+        if request.form.get('submit_button'):
+            color = request.form.get('submit_button')
+            if request.form['submit_button'] == 'ON':
+                print("Pressed On Button")
+            if request.form['submit_button'] == 'OFF':
+                print("Pressed Off Button")
         return render_template('numberpattern.html', color=color, brightness=brightness, pattern=pattern, color1=color1,
                                color2=color2)
     elif request.method == 'PATCH':
@@ -242,6 +248,12 @@ def color_chase():
         color3 = request.form.get('color1')
         color4 = request.form.get('color2')
         speed = request.form.get('speed')
+        if request.form.get('submit_button'):
+            color = request.form.get('submit_button')
+            if request.form['submit_button'] == 'ON':
+                print("Pressed On Button")
+            if request.form['submit_button'] == 'OFF':
+                print("Pressed Off Button")
         return render_template('colorchase.html', color=color, brightness=brightness, speed=speed,
                                color3=color3, color4=color4)
     else:
@@ -268,8 +280,37 @@ def colorcycle():
         elif request.form.get('speed_button'):
             speed = request.form.get('speed')
             print(f'The current speed is now {speed}')
+        return redirect('/colorcycle')
 
     return render_template('colorcycle.html', color=color, brightness=brightness, speed=speed)
+
+
+@app.route('/choice', methods=['GET', 'POST'])
+def choice():
+    global color
+    global brightness
+    global state
+
+    color = 'ANY COLOR'
+
+    if request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+    elif request.method == 'POST':
+        if request.form.get('submit_button'):
+            color = request.form.get('submit_button')
+            print(f'Pressed {color} button')
+        elif request.form.get('state_button'):
+            state = request.form.get('state')
+            print(f'The current state is {state}')
+        elif request.form.get('submit'):
+            rcolor = request.form.get('rcolor')
+            gcolor = request.form.get('gcolor')
+            bcolor = request.form.get('bcolor')
+        return render_template('choice.html', rcolor=rcolor, gcolor=gcolor, bcolor=bcolor, brightness=brightness, state=state)
+    else:
+        return render_template('choice.html', color=color, brightness=brightness, state=state)
+
 
 def run_pattern():
     global color
@@ -301,6 +342,10 @@ def run_pattern():
         color_cycle(brightness, speed)
     elif color == "RANDOM CYCLE":
         random_cycle(brightness, speed)
+    elif color == "RANDOM COLOR CYCLE":
+        random_color_cycle(brightness, speed)
+    elif color == "ANY COLOR":
+        get_color_code()
     elif color == "RED":
         status_array = [brightness, state, 255, 0, 0]
         set_color(status_array)
@@ -604,6 +649,19 @@ def get_pattern_colors():
     status_array = [brightness, pattern, code1, code2]
     num_pattern(status_array)
 
+
+def get_color_code():
+    global rcolor
+    global gcolor
+    global bcolor
+    global brightness
+    global state
+
+    rcolor = rcolor
+    gcolor = gcolor
+    bcolor = bcolor
+
+    color_choice(color_code, brightness, state)
 
 def auto_on():
     global color
