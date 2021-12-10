@@ -444,7 +444,7 @@ def color_choice(color_code, brightness, state):
         if state == 'WIPE':
             wipe_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
         elif state == 'SOLID':
-            solid_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
+            solid_color(strip, Color(color_code[0], color_code[1], color_code[2]))
     else:
         print("current state:", state)
         print("color code:", int(color_code))
