@@ -17,6 +17,9 @@ color1 = 'NONE'
 color2 = 'NONE'
 color3 = 'NONE'
 color4 = 'NONE'
+rcolor = 'NONE'
+gcolor = 'NONE'
+bcolor = 'NONE'
 pattern = 1
 
 
@@ -290,6 +293,9 @@ def choice():
     global color
     global brightness
     global state
+    global rcolor
+    global gcolor
+    global bcolor
 
     color = 'ANY COLOR'
 
