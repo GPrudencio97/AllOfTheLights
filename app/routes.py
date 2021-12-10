@@ -297,6 +297,7 @@ def choice():
     global gcolor
     global bcolor
 
+    event_object.set()
     color = 'ANY COLOR'
 
     if request.method == 'PATCH':
