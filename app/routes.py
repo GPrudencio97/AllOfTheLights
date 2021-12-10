@@ -529,7 +529,8 @@ def run_pattern():
 
     print(f'{color} waiting')
     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE" and color != "RAINBOW THEATER CHASE"\
-            and color != "THEATER CHASE" and color != "COLOR CHASE" and color != "COLOR CYCLE" and color != "RANDOM CYCLE":
+            and color != "THEATER CHASE" and color != "COLOR CHASE" and color != "COLOR CYCLE" and \
+            color != "RANDOM CYCLE" and color != "ANY COLOR":
         event_object.wait()
 
     return Response(run_pattern())
