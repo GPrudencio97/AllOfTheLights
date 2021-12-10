@@ -297,13 +297,13 @@ def choice():
     global gcolor
     global bcolor
 
-    event_object.set()
     color = 'ANY COLOR'
 
     if request.method == 'PATCH':
         brightness = request.get_json(force=True)
         return make_response("OK", 200)
     elif request.method == 'POST':
+        event_object.set()
         if request.form.get('submit_button'):
             color = request.form.get('submit_button')
             print(f'Pressed {color} button')
@@ -530,7 +530,7 @@ def run_pattern():
     print(f'{color} waiting')
     if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE" and color != "RAINBOW THEATER CHASE"\
             and color != "THEATER CHASE" and color != "COLOR CHASE" and color != "COLOR CYCLE" and \
-            color != "RANDOM CYCLE" and color != "ANY COLOR":
+            color != "RANDOM CYCLE":
         event_object.wait()
 
     return Response(run_pattern())
@@ -665,11 +665,7 @@ def get_color_code():
     global brightness
     global state
 
-    rcolor = rcolor
-    gcolor = gcolor
-    bcolor = bcolor
     color_code = [rcolor, gcolor, bcolor]
-
     color_choice(color_code, brightness, state)
 
 def auto_on():
