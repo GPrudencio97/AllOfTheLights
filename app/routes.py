@@ -666,6 +666,7 @@ def get_color_code():
     rcolor = rcolor
     gcolor = gcolor
     bcolor = bcolor
+    color_code = [rcolor, gcolor, bcolor]
 
     color_choice(color_code, brightness, state)
 
