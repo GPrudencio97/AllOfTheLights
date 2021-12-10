@@ -313,7 +313,7 @@ def choice():
             rcolor = request.form.get('rcolor')
             gcolor = request.form.get('gcolor')
             bcolor = request.form.get('bcolor')
-        return render_template('choice.html', rcolor=rcolor, gcolor=gcolor, bcolor=bcolor, brightness=brightness, state=state)
+        return render_template('choice.html', color=color, rcolor=rcolor, gcolor=gcolor, bcolor=bcolor, brightness=brightness, state=state)
     else:
         return render_template('choice.html', color=color, brightness=brightness, state=state)
 
