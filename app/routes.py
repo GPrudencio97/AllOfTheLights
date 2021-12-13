@@ -324,211 +324,210 @@ def run_pattern():
     global brightness
     global state
     global speed
+    global z
 
-    event_object.clear()
+    while z is True:
+        event_object.clear()
 
-    print(f'{color} running')
+        if color == "RAINBOW":
+            rainbow(brightness)
+        elif color == "RAINBOW CYCLE":
+            rainbow_cycle(brightness)
+        elif color == "RGB TWINKLE":
+            rgb_twinkle(brightness)
+        elif color == "RAINBOW THEATER CHASE":
+            rainbow_theater_chase(brightness, speed)
+        elif color == "RAINBOW CYCLE THEATER CHASE":
+            rainbow_cycle_theater_chase(brightness, speed)
+        elif color == "THEATER CHASE":
+            theater_chase(brightness, speed)
+        elif color == "COLOR CHASE":
+            get_chase_colors()
+        elif color == "NUMBER PATTERN":
+            get_pattern_colors()
+        elif color == "COLOR CYCLE":
+            color_cycle(brightness, speed)
+        elif color == "RANDOM CYCLE":
+            random_cycle(brightness, speed)
+        elif color == "RANDOM COLOR CYCLE":
+            random_color_cycle(brightness, speed)
+        elif color == "ANY COLOR":
+            get_color_code()
+        elif color == "RED":
+            status_array = [brightness, state, 255, 0, 0]
+            set_color(status_array)
+            pass
+        elif color == "ORANGE":
+            status_array = [brightness, state, 255, 165, 0]
+            set_color(status_array)
+            pass
+        elif color == "YELLOW":
+            status_array = [brightness, state, 255, 255, 0]
+            set_color(status_array)
+            pass
+        elif color == "GREEN":
+            status_array = [brightness, state, 0, 128, 0]
+            set_color(status_array)
+            pass
+        elif color == "BLUE":
+            status_array = [brightness, state, 0, 0, 255]
+            set_color(status_array)
+            pass
+        elif color == "INDIGO":
+            status_array = [brightness, state, 75, 0, 130]
+            set_color(status_array)
+            pass
+        elif color == "VIOLET":
+            status_array = [brightness, state, 238, 130, 238]
+            set_color(status_array)
+            pass
+        elif color == "WHITE":
+            status_array = [brightness, state, 255, 255, 255]
+            set_color(status_array)
+            pass
+        elif color == "ON":
+            status_array = [brightness, state, 255, 255, 255]
+            set_color(status_array)
+            pass
+        elif color == "OFF":
+            status_array = [brightness, state, 0, 0, 0]
+            set_color(status_array)
+            pass
+        elif color == "CRIMSON":
+            status_array = [brightness, state, 220, 20, 60]
+            set_color(status_array)
+            pass
+        elif color == "VERMILION":
+            status_array = [brightness, state, 227, 66, 52]
+            set_color(status_array)
+            pass
+        elif color == "RUBY":
+            status_array = [brightness, state, 224, 17, 95]
+            set_color(status_array)
+            pass
+        elif color == "PINK":
+            status_array = [brightness, state, 255, 192, 203]
+            set_color(status_array)
+            pass
+        elif color == "HOT PINK":
+            status_array = [brightness, state, 255, 105, 180]
+            set_color(status_array)
+            pass
+        elif color == "DEEP PINK":
+            status_array = [brightness, state, 255, 20, 147]
+            set_color(status_array)
+            pass
+        elif color == "FUCHSIA PINK":
+            status_array = [brightness, state, 255, 119, 255]
+            set_color(status_array)
+            pass
+        elif color == "ORANGERED":
+            status_array = [brightness, state, 255, 69, 0]
+            set_color(status_array)
+            pass
+        elif color == "YELLOW ORANGE":
+            status_array = [brightness, state, 255, 174, 66]
+            set_color(status_array)
+            pass
+        elif color == "BURNT ORANGE":
+            status_array = [brightness, state, 204, 85, 0]
+            set_color(status_array)
+            pass
+        elif color == "LIME":
+            status_array = [brightness, state, 0, 255, 0]
+            set_color(status_array)
+            pass
+        elif color == "FORESTGREEN":
+            status_array = [brightness, state, 34, 139, 34]
+            set_color(status_array)
+            pass
+        elif color == "DARKGREEN":
+            status_array = [brightness, state, 0, 100, 0]
+            set_color(status_array)
+            pass
+        elif color == "CARIBBEAN GREEN":
+            status_array = [brightness, state, 0, 204, 153]
+            set_color(status_array)
+            pass
+        elif color == "JADE":
+            status_array = [brightness, state, 0, 168, 107]
+            set_color(status_array)
+            pass
+        elif color == "AQUAMARINE":
+            status_array = [brightness, state, 127, 255, 212]
+            set_color(status_array)
+            pass
+        elif color == "TURQUOISE GREEN":
+            status_array = [brightness, state, 160, 214, 180]
+            set_color(status_array)
+            pass
+        elif color == "NEON GREEN":
+            status_array = [brightness, state, 57, 255, 20]
+            set_color(status_array)
+            pass
+        elif color == "UFO GREEN":
+            status_array = [brightness, state, 60, 208, 112]
+            set_color(status_array)
+            pass
+        elif color == "EMERALD":
+            status_array = [brightness, state, 80, 200, 0]
+            set_color(status_array)
+            pass
+        elif color == "MYRTLE":
+            status_array = [brightness, state, 33, 66, 30]
+            set_color(status_array)
+            pass
+        elif color == "ROYAL BLUE":
+            status_array = [brightness, state, 65, 105, 225]
+            set_color(status_array)
+            pass
+        elif color == "NAVY":
+            status_array = [brightness, state, 0, 0, 128]
+            set_color(status_array)
+            pass
+        elif color == "DEEP SKY BLUE":
+            status_array = [brightness, state, 0, 191, 255]
+            set_color(status_array)
+            pass
+        elif color == "ELECTRIC BLUE":
+            status_array = [brightness, state, 125, 249, 255]
+            set_color(status_array)
+            pass
+        elif color == "CYAN":
+            status_array = [brightness, state, 0, 183, 235]
+            set_color(status_array)
+            pass
+        elif color == "IMPERIAL BLUE":
+            status_array = [brightness, state, 0, 35, 149]
+            set_color(status_array)
+            pass
+        elif color == "PURPLE":
+            status_array = [brightness, state, 128, 0, 128]
+            set_color(status_array)
+            pass
+        elif color == "DARK SLATE BLUE":
+            status_array = [brightness, state, 72, 61, 139]
+            set_color(status_array)
+            pass
+        elif color == "LAVENDER":
+            status_array = [brightness, state, 181, 126, 220]
+            set_color(status_array)
+            pass
+        elif color == "AMETHYST":
+            status_array = [brightness, state, 153, 102, 204]
+            set_color(status_array)
+            pass
+        elif color == "ROYAL PURPLE":
+            status_array = [brightness, state, 120, 81, 169]
+            set_color(status_array)
+            pass
+        elif color == "NUMBER PATTERN":
+            new_brightness(brightness)
+            pass
+        else:
+            print(f'Invalid color: {color}')
 
-    if color == "RAINBOW":
-        rainbow(brightness)
-    elif color == "RAINBOW CYCLE":
-        rainbow_cycle(brightness)
-    elif color == "RGB TWINKLE":
-        rgb_twinkle(brightness)
-    elif color == "RAINBOW THEATER CHASE":
-        rainbow_theater_chase(brightness, speed)
-    elif color == "RAINBOW CYCLE THEATER CHASE":
-        rainbow_cycle_theater_chase(brightness, speed)
-    elif color == "THEATER CHASE":
-        theater_chase(brightness, speed)
-    elif color == "COLOR CHASE":
-        get_chase_colors()
-    elif color == "NUMBER PATTERN":
-        get_pattern_colors()
-    elif color == "COLOR CYCLE":
-        color_cycle(brightness, speed)
-    elif color == "RANDOM CYCLE":
-        random_cycle(brightness, speed)
-    elif color == "RANDOM COLOR CYCLE":
-        random_color_cycle(brightness, speed)
-    elif color == "ANY COLOR":
-        get_color_code()
-    elif color == "RED":
-        status_array = [brightness, state, 255, 0, 0]
-        set_color(status_array)
-        pass
-    elif color == "ORANGE":
-        status_array = [brightness, state, 255, 165, 0]
-        set_color(status_array)
-        pass
-    elif color == "YELLOW":
-        status_array = [brightness, state, 255, 255, 0]
-        set_color(status_array)
-        pass
-    elif color == "GREEN":
-        status_array = [brightness, state, 0, 128, 0]
-        set_color(status_array)
-        pass
-    elif color == "BLUE":
-        status_array = [brightness, state, 0, 0, 255]
-        set_color(status_array)
-        pass
-    elif color == "INDIGO":
-        status_array = [brightness, state, 75, 0, 130]
-        set_color(status_array)
-        pass
-    elif color == "VIOLET":
-        status_array = [brightness, state, 238, 130, 238]
-        set_color(status_array)
-        pass
-    elif color == "WHITE":
-        status_array = [brightness, state, 255, 255, 255]
-        set_color(status_array)
-        pass
-    elif color == "ON":
-        status_array = [brightness, state, 255, 255, 255]
-        set_color(status_array)
-        pass
-    elif color == "OFF":
-        status_array = [brightness, state, 0, 0, 0]
-        set_color(status_array)
-        pass
-    elif color == "CRIMSON":
-        status_array = [brightness, state, 220, 20, 60]
-        set_color(status_array)
-        pass
-    elif color == "VERMILION":
-        status_array = [brightness, state, 227, 66, 52]
-        set_color(status_array)
-        pass
-    elif color == "RUBY":
-        status_array = [brightness, state, 224, 17, 95]
-        set_color(status_array)
-        pass
-    elif color == "PINK":
-        status_array = [brightness, state, 255, 192, 203]
-        set_color(status_array)
-        pass
-    elif color == "HOT PINK":
-        status_array = [brightness, state, 255, 105, 180]
-        set_color(status_array)
-        pass
-    elif color == "DEEP PINK":
-        status_array = [brightness, state, 255, 20, 147]
-        set_color(status_array)
-        pass
-    elif color == "FUCHSIA PINK":
-        status_array = [brightness, state, 255, 119, 255]
-        set_color(status_array)
-        pass
-    elif color == "ORANGERED":
-        status_array = [brightness, state, 255, 69, 0]
-        set_color(status_array)
-        pass
-    elif color == "YELLOW ORANGE":
-        status_array = [brightness, state, 255, 174, 66]
-        set_color(status_array)
-        pass
-    elif color == "BURNT ORANGE":
-        status_array = [brightness, state, 204, 85, 0]
-        set_color(status_array)
-        pass
-    elif color == "LIME":
-        status_array = [brightness, state, 0, 255, 0]
-        set_color(status_array)
-        pass
-    elif color == "FORESTGREEN":
-        status_array = [brightness, state, 34, 139, 34]
-        set_color(status_array)
-        pass
-    elif color == "DARKGREEN":
-        status_array = [brightness, state, 0, 100, 0]
-        set_color(status_array)
-        pass
-    elif color == "CARIBBEAN GREEN":
-        status_array = [brightness, state, 0, 204, 153]
-        set_color(status_array)
-        pass
-    elif color == "JADE":
-        status_array = [brightness, state, 0, 168, 107]
-        set_color(status_array)
-        pass
-    elif color == "AQUAMARINE":
-        status_array = [brightness, state, 127, 255, 212]
-        set_color(status_array)
-        pass
-    elif color == "TURQUOISE GREEN":
-        status_array = [brightness, state, 160, 214, 180]
-        set_color(status_array)
-        pass
-    elif color == "NEON GREEN":
-        status_array = [brightness, state, 57, 255, 20]
-        set_color(status_array)
-        pass
-    elif color == "UFO GREEN":
-        status_array = [brightness, state, 60, 208, 112]
-        set_color(status_array)
-        pass
-    elif color == "EMERALD":
-        status_array = [brightness, state, 80, 200, 0]
-        set_color(status_array)
-        pass
-    elif color == "MYRTLE":
-        status_array = [brightness, state, 33, 66, 30]
-        set_color(status_array)
-        pass
-    elif color == "ROYAL BLUE":
-        status_array = [brightness, state, 65, 105, 225]
-        set_color(status_array)
-        pass
-    elif color == "NAVY":
-        status_array = [brightness, state, 0, 0, 128]
-        set_color(status_array)
-        pass
-    elif color == "DEEP SKY BLUE":
-        status_array = [brightness, state, 0, 191, 255]
-        set_color(status_array)
-        pass
-    elif color == "ELECTRIC BLUE":
-        status_array = [brightness, state, 125, 249, 255]
-        set_color(status_array)
-        pass
-    elif color == "CYAN":
-        status_array = [brightness, state, 0, 183, 235]
-        set_color(status_array)
-        pass
-    elif color == "IMPERIAL BLUE":
-        status_array = [brightness, state, 0, 35, 149]
-        set_color(status_array)
-        pass
-    elif color == "PURPLE":
-        status_array = [brightness, state, 128, 0, 128]
-        set_color(status_array)
-        pass
-    elif color == "DARK SLATE BLUE":
-        status_array = [brightness, state, 72, 61, 139]
-        set_color(status_array)
-        pass
-    elif color == "LAVENDER":
-        status_array = [brightness, state, 181, 126, 220]
-        set_color(status_array)
-        pass
-    elif color == "AMETHYST":
-        status_array = [brightness, state, 153, 102, 204]
-        set_color(status_array)
-        pass
-    elif color == "ROYAL PURPLE":
-        status_array = [brightness, state, 120, 81, 169]
-        set_color(status_array)
-        pass
-    elif color == "NUMBER PATTERN":
-        new_brightness(brightness)
-        pass
-    else:
-        print(f'Invalid color: {color}')
-
-    print(f'{color} waiting')
-    event_object.wait()
+        event_object.wait()
 
     return Response(run_pattern())
 

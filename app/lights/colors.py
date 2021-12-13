@@ -235,9 +235,7 @@ def new_brightness(brightness):
         if new_brightness != LED_BRIGHTNESS:
             LED_BRIGHTNESS = new_brightness
             strip.setBrightness(new_brightness)
-            print("LED BRIGHTNESS:", LED_BRIGHTNESS)
         else:
-            print("LED BRIGHTNESS:", LED_BRIGHTNESS)
             return
     else:
         print("brightness:", brightness)
