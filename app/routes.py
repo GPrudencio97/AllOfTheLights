@@ -3,7 +3,6 @@ import time
 from app import app
 from flask import render_template, redirect, request, Response, make_response
 from flask_wtf import form
-from app.lights.colors import *
 import threading
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -297,6 +296,7 @@ def choice():
     global gcolor
     global bcolor
 
+    event_object.set()
     color = 'ANY COLOR'
 
     if request.method == 'PATCH':
@@ -528,10 +528,7 @@ def run_pattern():
         print(f'Invalid color: {color}')
 
     print(f'{color} waiting')
-    if color != "RAINBOW" and color != "RAINBOW CYCLE" and color != "RGB TWINKLE" and color != "RAINBOW THEATER CHASE"\
-            and color != "THEATER CHASE" and color != "COLOR CHASE" and color != "COLOR CYCLE" and \
-            color != "RANDOM CYCLE":
-        event_object.wait()
+    event_object.wait()
 
     return Response(run_pattern())
 
@@ -668,6 +665,11 @@ def get_color_code():
     color_code = [rcolor, gcolor, bcolor]
     color_choice(color_code, brightness, state)
 
+
+def thread_state():
+    event_object.set()
+
+
 def auto_on():
     global color
 
@@ -697,3 +699,5 @@ fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 h = logging.StreamHandler()
 h.setFormatter(fmt)
 log.addHandler(h)
+
+from app.lights.colors import *

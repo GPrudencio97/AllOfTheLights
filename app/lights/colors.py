@@ -1,6 +1,7 @@
 import time
 import random
 import io
+from app.routes import thread_state
 
 try:
     with io.open('/sys/firmware/devicetree/base/model', 'r') as m:
@@ -62,6 +63,7 @@ def rainbow(brightness, wait_ms=20, iterations=1):
                 strip.setPixelColor(i, wheel((i+j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
+        thread_state()
     else:
         print("Running Rainbow")
         time.sleep(1)
@@ -75,6 +77,7 @@ def rainbow_cycle(brightness, wait_ms=20, iterations=1):
                 strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
+        thread_state()
     else:
         print("Running Rainbow Cycle")
         time.sleep(1)
@@ -124,6 +127,7 @@ def rgb_twinkle(brightness, wait_s=1):
                     break
         strip.show()
         time.sleep(wait_s)
+        thread_state()
     else:
         print("Runninng RGB Twinkle")
         x = 150
@@ -269,6 +273,7 @@ def rainbow_theater_chase(brightness, speed, wait_ms=50):
                     time.sleep(wait_ms/1000.0)
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, 0)
+        thread_state()
     else:
         print("Running Rainbow Theater Chase")
         print(f'Current speed is {speed}')
@@ -295,6 +300,7 @@ def rainbow_cycle_theater_chase(brightness, speed, wait_ms=50):
                     time.sleep(wait_ms / 1000.0)
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, 0)
+        thread_state()
     else:
         print("Running Rainbow Cycle Theater Chase")
         print(f'Current speed is {speed}')
@@ -323,6 +329,7 @@ def color_theater_chase(status_array, wait_ms=50):
                 time.sleep(wait_ms / 1000.0)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
+        thread_state()
     else:
         print("Running Color Theater Chase")
         print(f'Current speed is {speed}')
@@ -349,6 +356,7 @@ def theater_chase(brightness, speed, wait_ms=50):
             time.sleep(sleep)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
+        thread_state()
     else:
         print("Running Theater Chase")
         print(f'Current speed is {speed}')
@@ -380,7 +388,7 @@ def color_cycle(brightness, speed, wait_ms=50):
             strip.setPixelColor(i, Color(0, 128, 0))
         strip.show()
         time.sleep(sleep)
-
+        thread_state()
     else:
         print("Running rgb_cycle")
         print(f'Current speed is {speed}')
@@ -404,7 +412,7 @@ def random_cycle(brightness, speed, wait_ms=50):
             strip.setPixelColor(i, Color(random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256)))
         strip.show()
         time.sleep(sleep)
-
+        thread_state()
     else:
         print("Running random_cycle")
         print(f'Current speed is {speed}')
@@ -431,7 +439,7 @@ def random_color_cycle(brightness, speed, wait_ms=50):
             strip.setPixelColor(i, Color(r, g, b))
         strip.show()
         time.sleep(sleep)
-
+        thread_state()
     else:
         print("Running random_cycle")
         print(f'Current speed is {speed}')
@@ -445,6 +453,7 @@ def color_choice(color_code, brightness, state):
             wipe_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
         elif state == 'SOLID':
             solid_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
+        thread_state()
     else:
         print("current state:", state)
         print("color code:", int(color_code[0]), int(color_code[1]), int(color_code[2]))
