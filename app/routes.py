@@ -19,6 +19,9 @@ color4 = 'NONE'
 rcolor = 'NONE'
 gcolor = 'NONE'
 bcolor = 'NONE'
+off_hour = 2
+on_hour = 17
+on_color = 'RAINBOW'
 pattern = 1
 
 
@@ -317,6 +320,26 @@ def choice():
         return render_template('choice.html', color=color, rcolor=rcolor, gcolor=gcolor, bcolor=bcolor, brightness=brightness, state=state)
     else:
         return render_template('choice.html', color=color, brightness=brightness, state=state)
+
+
+@app.route('/timer', methods=['GET', 'POST'])
+def timer():
+    global color
+    global brightness
+    global off_hour
+    global on_hour
+    global on_color
+
+    if request.method == 'PATCH':
+        brightness = request.get_json(force=True)
+        return make_response("OK", 200)
+    elif request.method == 'POST':
+        off_hour = request.form.get('off_hour')
+        on_hour = request.form.get('on_hour')
+        on_color = request.form.get('on_color')
+        return render_template('timer.html', color=color, brightness=brightness, on_color=on_color, on_hour=on_hour, off_hour=off_hour)
+    else:
+        return render_template('timer.html', color=color, brightness=brightness, on_color=on_color, on_hour=on_hour, off_hour=off_hour)
 
 
 def run_pattern():
@@ -672,8 +695,9 @@ def thread_state():
 def auto_on():
     global color
 
-    event_object.set()
-    color = "ON"
+    if color == "OFF":
+        event_object.set()
+        color = on_color
 
 
 def auto_off():
@@ -684,11 +708,11 @@ def auto_off():
 
 
 start = BackgroundScheduler()
-start.add_job(auto_on, 'cron', hour=17)
+start.add_job(auto_on, 'cron', hour=on_hour)
 start.start()
 
 stop = BackgroundScheduler()
-stop.add_job(auto_off, 'cron', hour=2)
+stop.add_job(auto_off, 'cron', hour=off_hour)
 stop.start()
 
 log = logging.getLogger('apscheduler.executors.default')
