@@ -2,12 +2,12 @@
 
 {% block content %}
   <div class="pattern-container">
-      <h2>Note: Page In Testing</h2>
+      <h2>Color Theater Chase</h2>
       <form method="POST" action="/colorchase">
           <div>
               <label for="color1">Choose the First Color</label>
               <select name="color1" id="color1">
-                  {% if color1 == 'RED' %}
+                  {% if color3 == 'RED' %}
                   <option value="RED" selected>Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -15,7 +15,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'ORANGE' %}
+                  {% elif color3 == 'ORANGE' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE" selected>Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -23,7 +23,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'YELLOW' %}
+                  {% elif color3 == 'YELLOW' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW" selected>Yellow</option>
@@ -31,7 +31,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'GREEN' %}
+                  {% elif color3 == 'GREEN' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -39,7 +39,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'BLUE' %}
+                  {% elif color3 == 'BLUE' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -47,7 +47,7 @@
                   <option value="BLUE" selected>Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'INDIGO' %}
+                  {% elif color3 == 'INDIGO' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -55,7 +55,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO" selected>Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color1 == 'VIOLET' %}
+                  {% elif color3 == 'VIOLET' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -79,7 +79,7 @@
           <div>
               <label for="color2">Choose the Second Color</label>
               <select name="color2" id="color2">
-                  {% if color2 == 'RED' %}
+                  {% if color4 == 'RED' %}
                   <option value="RED" selected>Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -87,7 +87,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'ORANGE' %}
+                  {% elif color4 == 'ORANGE' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE" selected>Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -95,7 +95,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'YELLOW' %}
+                  {% elif color4 == 'YELLOW' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW" selected>Yellow</option>
@@ -103,7 +103,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'GREEN' %}
+                  {% elif color4 == 'GREEN' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -111,7 +111,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'BLUE' %}
+                  {% elif color4 == 'BLUE' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -119,7 +119,7 @@
                   <option value="BLUE" selected>Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'INDIGO' %}
+                  {% elif color4 == 'INDIGO' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -127,7 +127,7 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO" selected>Indigo</option>
                   <option value="VIOLET">Violet</option>
-                  {% elif color2 == 'VIOLET' %}
+                  {% elif color4 == 'VIOLET' %}
                   <option value="RED">Red</option>
                   <option value="ORANGE">Orange</option>
                   <option value="YELLOW">Yellow</option>
@@ -144,6 +144,50 @@
                   <option value="BLUE">Blue</option>
                   <option value="INDIGO">Indigo</option>
                   <option value="VIOLET">Violet</option>
+                  {% endif %}
+              </select>
+          </div>
+          <br>
+          <div>
+              <label for="speed">Choose a Speed</label>
+              <select name="speed" id="speed">
+                  {% if speed == 'SLOW' %}
+                  <option value="SLOW" selected>SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM-SLOW' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW" selected>MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM" selected>MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'MEDIUM-FAST' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST" selected>MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
+                  {% elif speed == 'FAST' %}
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST" selected>FAST</option>
+                  {% else %}
+                  <option value="none" selected disabled hidden>Select an Option</option>
+                  <option value="SLOW">SLOW</option>
+                  <option value="MEDIUM-SLOW">MEDIUM-SLOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="MEDIUM-FAST">MEDIUM-FAST</option>
+                  <option value="FAST">FAST</option>
                   {% endif %}
               </select>
           </div>

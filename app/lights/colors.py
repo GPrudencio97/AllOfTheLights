@@ -1,4 +1,7 @@
-import time, random, io
+import time
+import random
+import io
+from app.routes import thread_state
 
 try:
     with io.open('/sys/firmware/devicetree/base/model', 'r') as m:
@@ -60,6 +63,7 @@ def rainbow(brightness, wait_ms=20, iterations=1):
                 strip.setPixelColor(i, wheel((i+j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
+        thread_state()
     else:
         print("Running Rainbow")
         time.sleep(1)
@@ -73,6 +77,7 @@ def rainbow_cycle(brightness, wait_ms=20, iterations=1):
                 strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
+        thread_state()
     else:
         print("Running Rainbow Cycle")
         time.sleep(1)
@@ -98,30 +103,31 @@ def rgb_twinkle(brightness, wait_s=1):
     if check is True:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(255, 255, 255))
-        x = len(strip.numPixels())
+        x = strip.numPixels()
         if r == 0:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(255, 0, 0))
+                    strip.setPixelColor(new_y, Color(255, 0, 0))
                     new_y = new_y + y
                 else:
                     break
         elif r == 1:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(0, 128, 0))
+                    strip.setPixelColor(new_y, Color(0, 128, 0))
                     new_y = new_y + y
                 else:
                     break
         elif r == 2:
             while new_y <= x:
                 if new_y <= x:
-                    strip.setPixelColor(y, Color(0, 0, 255))
+                    strip.setPixelColor(new_y, Color(0, 0, 255))
                     new_y = new_y + y
                 else:
                     break
         strip.show()
         time.sleep(wait_s)
+        thread_state()
     else:
         print("Runninng RGB Twinkle")
         x = 150
@@ -178,7 +184,7 @@ def num_pattern(status_array):
             i = i + num
             while j <= (new_num - num):
                 if j <= int(strip.numPixels()):
-                    strip.setPixelColor(i, Color(code2[0], code2[1], code2[2]))
+                    strip.setPixelColor(j, Color(code2[0], code2[1], code2[2]))
                     j += 1
                 else:
                     break
@@ -229,9 +235,7 @@ def new_brightness(brightness):
         if new_brightness != LED_BRIGHTNESS:
             LED_BRIGHTNESS = new_brightness
             strip.setBrightness(new_brightness)
-            print("LED BRIGHTNESS:", LED_BRIGHTNESS)
         else:
-            print("LED BRIGHTNESS:", LED_BRIGHTNESS)
             return
     else:
         print("brightness:", brightness)
@@ -247,7 +251,7 @@ def color_changer(r, g, b):
         print("Changing Color Changer")
 
 
-def rainbow_theater_chase(brightness, wait_ms=50):
+def rainbow_theater_chase(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
         for j in range(256):
@@ -255,42 +259,199 @@ def rainbow_theater_chase(brightness, wait_ms=50):
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, wheel((i+j) % 255))
                 strip.show()
-                time.sleep(wait_ms/1000.0)
+                if speed == 'SLOW':
+                    time.sleep(wait_ms/100.0)
+                elif speed == 'MEDIUM-SLOW':
+                    time.sleep(wait_ms/200.0)
+                elif speed == 'MEDIUM':
+                    time.sleep(wait_ms/80)
+                elif speed == 'MEDIUM-FAST':
+                    time.sleep(wait_ms/500.0)
+                else:
+                    time.sleep(wait_ms/1000.0)
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i+q, 0)
+        thread_state()
     else:
         print("Running Rainbow Theater Chase")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def rainbow_cycle_theater_chase(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        for j in range(256):
+            for q in range(3):
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
+                strip.show()
+                if speed == 'SLOW':
+                    time.sleep(wait_ms / 100.0)
+                elif speed == 'MEDIUM-SLOW':
+                    time.sleep(wait_ms / 200.0)
+                elif speed == 'MEDIUM':
+                    time.sleep(wait_ms / 80)
+                elif speed == 'MEDIUM-FAST':
+                    time.sleep(wait_ms / 500.0)
+                else:
+                    time.sleep(wait_ms / 1000.0)
+                for i in range(0, strip.numPixels(), 3):
+                    strip.setPixelColor(i+q, 0)
+        thread_state()
+    else:
+        print("Running Rainbow Cycle Theater Chase")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
 
 
 def color_theater_chase(status_array, wait_ms=50):
     new_brightness(status_array[0])
-    code1 = status_array[1]
-    code2 = status_array[2]
+    speed = status_array[1]
+    code1 = status_array[2]
+    code2 = status_array[3]
     if check is True:
-        for j in range(iterations):
-            for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
-                strip.show()
-                time.sleep(wait_ms/1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(code1[0], code1[1], code1[2]))
+            strip.show()
+            if speed == 'SLOW':
+                time.sleep(wait_ms / 100.0)
+            elif speed == 'MEDIUM-SLOW':
+                time.sleep(wait_ms / 200.0)
+            elif speed == 'MEDIUM':
+                time.sleep(wait_ms / 80)
+            elif speed == 'MEDIUM-FAST':
+                time.sleep(wait_ms / 500.0)
+            else:
+                time.sleep(wait_ms / 1000.0)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(code2[0], code2[1], code2[2]))
+        thread_state()
     else:
         print("Running Color Theater Chase")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
 
 
-def theater_chase(brightness, wait_ms=50):
+def theater_chase(brightness, speed, wait_ms=50):
     new_brightness(brightness)
     if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 100.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 200.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 80)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 500.0)
+        else:
+            sleep = (wait_ms / 1000.0)
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(255, 255, 255))
             strip.show()
-            time.sleep(wait_ms/1000.0)
+            time.sleep(sleep)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
+        thread_state()
     else:
         print("Running Theater Chase")
+        print(f'Current speed is {speed}')
         time.sleep(wait_ms/10)
+
+
+def color_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 10.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 25.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 50.0)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 75.0)
+        else:
+            sleep = (wait_ms / 100.0)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(255, 0, 0))
+        strip.show()
+        time.sleep(sleep)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(0, 0, 255))
+        strip.show()
+        time.sleep(sleep)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(0, 128, 0))
+        strip.show()
+        time.sleep(sleep)
+        thread_state()
+    else:
+        print("Running rgb_cycle")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def random_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 10.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 25.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 50.0)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 75.0)
+        else:
+            sleep = (wait_ms / 100.0)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256)))
+        strip.show()
+        time.sleep(sleep)
+        thread_state()
+    else:
+        print("Running random_cycle")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms/10)
+
+
+def random_color_cycle(brightness, speed, wait_ms=50):
+    new_brightness(brightness)
+    if check is True:
+        if speed == 'SLOW':
+            sleep = (wait_ms / 10.0)
+        elif speed == 'MEDIUM-SLOW':
+            sleep = (wait_ms / 25.0)
+        elif speed == 'MEDIUM':
+            sleep = (wait_ms / 50.0)
+        elif speed == 'MEDIUM-FAST':
+            sleep = (wait_ms / 75.0)
+        else:
+            sleep = (wait_ms / 100.0)
+        r = random.randrange(0, 256)
+        g = random.randrange(0, 256)
+        b = random.randrange(0, 256)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(r, g, b))
+        strip.show()
+        time.sleep(sleep)
+        thread_state()
+    else:
+        print("Running random_cycle")
+        print(f'Current speed is {speed}')
+        time.sleep(wait_ms / 10)
+
+
+def color_choice(color_code, brightness, state):
+    new_brightness(brightness)
+    if check is True:
+        if state == 'WIPE':
+            wipe_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
+        elif state == 'SOLID':
+            solid_color(strip, Color(int(color_code[0]), int(color_code[1]), int(color_code[2])))
+        thread_state()
+    else:
+        print("current state:", state)
+        print("color code:", int(color_code[0]), int(color_code[1]), int(color_code[2]))

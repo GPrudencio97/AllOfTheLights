@@ -61,7 +61,17 @@ div.distance{
     }
 
     .rainbow_cycle{
-        background-image: linear-gradient(45deg, red,orange,green,blue,indigo,violet); 
+        background-image: linear-gradient(45deg, violet,indigo,blue,green,orange,red);
+        color:white;
+    }
+
+    .rainbow_cycle_chase{
+        background-image: linear-gradient(315deg, red,orange,green,blue,indigo,violet);
+        color: white;
+    }
+
+    .rainbow_chase{
+        background-image: linear-gradient(225deg, violet,indigo,blue,green,orange,red);
         color:white;
     }
 
