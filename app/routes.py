@@ -19,8 +19,8 @@ color4 = 'NONE'
 rcolor = 'NONE'
 gcolor = 'NONE'
 bcolor = 'NONE'
-off_hour = 2
-on_hour = 17
+off_hour = '2'
+on_hour = '17'
 on_color = 'RAINBOW'
 pattern = 1
 
@@ -337,6 +337,7 @@ def timer():
         off_hour = request.form.get('off_hour')
         on_hour = request.form.get('on_hour')
         on_color = request.form.get('on_color')
+        print(on_color, on_hour, off_hour)
         return render_template('timer.html', color=color, brightness=brightness, on_color=on_color, on_hour=on_hour, off_hour=off_hour)
     else:
         return render_template('timer.html', color=color, brightness=brightness, on_color=on_color, on_hour=on_hour, off_hour=off_hour)
@@ -708,11 +709,11 @@ def auto_off():
 
 
 start = BackgroundScheduler()
-start.add_job(auto_on, 'cron', hour=on_hour)
+start.add_job(auto_on, 'cron', hour=int(on_hour))
 start.start()
 
 stop = BackgroundScheduler()
-stop.add_job(auto_off, 'cron', hour=off_hour)
+stop.add_job(auto_off, 'cron', hour=int(off_hour))
 stop.start()
 
 log = logging.getLogger('apscheduler.executors.default')
